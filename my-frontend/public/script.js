@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    /*
+    
     // ==========================
     // PROCESO DE LOGIN
     // ==========================
@@ -89,5 +89,5 @@ document.addEventListener("DOMContentLoaded", () => {
         mensajeDiv.style.color = color;
         mensajeDiv.style.fontSize = "1.2em";
         mensajeDiv.style.marginBottom = "10px";
-    }*/
+    }
 });
