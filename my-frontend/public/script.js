@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const datos = { email, password };
 
         // Realiza la petición POST al backend para autenticar al usuario
-        fetch("https://backend-int-production.up.railway.app:8084/api/login", {
+        fetch("http://backend-int-production.up.railway.app:8084/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
