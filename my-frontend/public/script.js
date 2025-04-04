@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const datos = { email, password };
 
         // Realiza la petición POST al backend para autenticar al usuario
-        fetch("http://localhost:5432/api/login", {
+        fetch("http://localhost:8080/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
