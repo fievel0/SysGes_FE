@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
   
       // Enviar datos mediante POST a la URL indicada
-      fetch("http://localhost:8084/api/ord_rep/save", {
+      fetch("https://backend-int-production.up.railway.app/api/ord_rep/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
