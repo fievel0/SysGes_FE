@@ -164,8 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     const url = btnIDCustomer.classList.contains("active")
-      ? `https://backend-int-production.up.railway.app/api/customer/find/${valor}`
-      : `https://backend-int-production.up.railway.app/api/customer/cedula/${valor}`;
+      ? `https://sysgesbe-production.up.railway.app/api/customer/find/${valor}`
+      : `https://sysgesbe-production.up.railway.app/api/customer/cedula/${valor}`;
 
     fetch(url)
       .then(response => {
@@ -287,8 +287,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     const url = btnIDEmployee.classList.contains("active")
-      ? `https://backend-int-production.up.railway.app/api/employee/find/${valor}`
-      : `https://backend-int-production.up.railway.app/api/employee/cedula/${valor}`;
+      ? `https://sysgesbe-production.up.railway.app/api/employee/find/${valor}`
+      : `https://sysgesbe-production.up.railway.app/api/employee/cedula/${valor}`;
 
     fetch(url)
       .then(response => {
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
       // Consultar si la identificación ya está registrada
-      const checkResponse = await fetch(`https://backend-int-production.up.railway.app/api/customer/find/${cardIdentifi}`);
+      const checkResponse = await fetch(`https://sysgesbe-production.up.railway.app/api/customer/find/${cardIdentifi}`);
 
       if (checkResponse.ok) {
         mensaje.textContent = 'La identificación ya está registrada.';
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     try {
-      const response = await fetch('https://backend-int-production.up.railway.app/api/customer/save', {
+      const response = await fetch('https://sysgesbe-production.up.railway.app/api/customer/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
       mostrarErrorEquip("Ingrese un ID válido.");
       return;
     }
-    const url = `https://backend-int-production.up.railway.app/api/customer/find/${idValue}`;
+    const url = `https://sysgesbe-production.up.railway.app/api/customer/find/${idValue}`;
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -484,7 +484,7 @@ document.addEventListener('DOMContentLoaded', function() {
       id_customer
     };
 
-    const url = "https://backend-int-production.up.railway.app/api/equipment/save";
+    const url = "https://sysgesbe-production.up.railway.app/api/equipment/save";
 
     fetch(url, {
       method: "POST",
@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const resultContainerrr = document.querySelector('.result-containerrr');
 
         // Realizamos una nueva solicitud para obtener los datos completos del equipo guardado
-        fetch(`https://backend-int-production.up.railway.app/api/equipment/find/${data.id}`)
+        fetch(`https://sysgesbe-production.up.railway.app/api/equipment/find/${data.id}`)
           .then(response => {
             if (!response.ok) {
               throw new Error("Error al obtener los detalles del equipo");
@@ -599,7 +599,7 @@ document.addEventListener('DOMContentLoaded', function() {
         employee: { idEmployee }
       };
 
-      fetch("https://backend-int-production.up.railway.app/api/ord_rep/save", {
+      fetch("https://sysgesbe-production.up.railway.app/api/ord_rep/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Enviar los datos usando fetch
-    fetch('https://backend-int-production.up.railway.app/api/payments/save', {
+    fetch('https://sysgesbe-production.up.railway.app/api/payments/save', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -742,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
       contenedorFinal.style.display = 'block';
       
       // Consultar los datos del pago recién guardado usando la URL correcta
-      return fetch(`https://backend-int-production.up.railway.app/api/payments/find/${paymentId}`);
+      return fetch(`https://sysgesbe-production.up.railway.app/api/payments/find/${paymentId}`);
     })
     .then(response => {
       if (!response.ok) {
