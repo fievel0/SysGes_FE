@@ -959,9 +959,6 @@ document.addEventListener('DOMContentLoaded', function() {
   </head>
   <body>
     <div class="header-container">
-      <div class="logo-container">
-        <img class="Logo" src="/Imagenes/logoo.png" alt="LOGO-INT">
-      </div>
       <div class="header-text">
         <h3 style="margin: 2px;">Orden de Trabajo</h3>
         <h4 style="margin: 2px;">INT-SOLUTIONS</h4>
