@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Realiza la solicitud POST al endpoint api/login/register
-        fetch('https://backend-int-production.up.railway.app/api/login/register', {
+        fetch('https://sysgesbe-production.up.railway.app/api/login/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
