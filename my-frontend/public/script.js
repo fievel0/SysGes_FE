@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================
     // PROCESO DE LOGIN
     // ==========================
-/*
     // Obtiene el botón de inicio de sesión y el contenedor de mensajes
     const btnIniciar = document.querySelector(".btn-iniciar");
     const mensajeDiv = document.getElementById("mensaje");
@@ -70,9 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Muestra un mensaje de éxito
             mostrarMensaje("Inicio de sesión exitoso.", "green");
 
-            // Redirige al menú principal 
+            // Redirige al menú principal a la ubicación ../menu/menu.html
             setTimeout(() => {
-                window.location.href = "../public/menu/menu.html";
+                window.location.href = "../menu/menu.html";
             }, 500);
         })
         .catch(error => {
@@ -80,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mostrarMensaje(error.message, "red");
         });
     });
+
     // ==========================
     // FUNCIÓN PARA MOSTRAR MENSAJES
     // ==========================
@@ -89,5 +89,5 @@ document.addEventListener("DOMContentLoaded", () => {
         mensajeDiv.style.color = color;
         mensajeDiv.style.fontSize = "1.2em";
         mensajeDiv.style.marginBottom = "10px";
-    } */
+    }
 });
