@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       // URL de la API para buscar cliente; asegúrate de que este endpoint exista
-      const url = `http://localhost:8084/api/customer/find/${id}`;
+      const url = `https://backend-int-production.up.railway.app/api/customer/find/${id}`;
       fetch(url)
         .then(response => {
           if (!response.ok) {
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
   
       // URL de la API para guardar equipo
-      const url = "http://localhost:8084/api/equipment/save";
+      const url = "https://backend-int-production.up.railway.app/api/equipment/save";
   
       fetch(url, {
         method: "POST",
