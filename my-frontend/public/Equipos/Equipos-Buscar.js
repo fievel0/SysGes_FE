@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnDelete.addEventListener("click", () => {
           const equipmentId = equipDiv.querySelector(".equip-id")?.value;
           if (!equipmentId) return;
-          const deleteUrl = `http://localhost:8084/api/equipment/delete/${equipmentId}`;
+          const deleteUrl = `https://backend-int-production.up.railway.app/api/equipment/delete/${equipmentId}`;
           fetch(deleteUrl, { method: "DELETE" })
             .then(response => {
               if (!response.ok) {
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showGlobalMessage("No se encontró el equipo para actualizar", "red");
             return;
           }
-          const updateUrl = `http://localhost:8084/api/equipment/update/${equipmentData.id_equip}`;
+          const updateUrl = `https://backend-int-production.up.railway.app/api/equipment/update/${equipmentData.id_equip}`;
           fetch(updateUrl, {
             method: "PUT",
             headers: {
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Búsqueda por ID Equipo
     if (btnID.classList.contains("active")) {
-      const url = `http://localhost:8084/api/equipment/find/${valor}`;
+      const url = `https://backend-int-production.up.railway.app/api/equipment/find/${valor}`;
       fetch(url)
         .then(response => {
           if (!response.ok) {
@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Búsqueda por ID Dueño
     else if (btnCedula.classList.contains("active")) {
-      fetch("http://localhost:8084/api/equipment/findAll")
+      fetch("https://backend-int-production.up.railway.app/api/equipment/findAll")
         .then(response => {
           if (!response.ok) {
             throw new Error("Error en la solicitud");
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
       resultContainer.innerHTML = `<p style="color:red;">No se encontró el ID del equipo para borrar</p>`;
       return;
     }
-    const deleteUrl = `http://localhost:8084/api/equipment/delete/${equipmentId}`;
+    const deleteUrl = `https://backend-int-production.up.railway.app/api/equipment/delete/${equipmentId}`;
     fetch(deleteUrl, {
       method: "DELETE"
     })
@@ -400,7 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
       resultContainer.innerHTML = `<p style="color:red;">No se encontró el equipo para actualizar</p>`;
       return;
     }
-    const updateUrl = `http://localhost:8084/api/equipment/update/${equipmentData.id_equip}`;
+    const updateUrl = `https://backend-int-production.up.railway.app/api/equipment/update/${equipmentData.id_equip}`;
     fetch(updateUrl, {
       method: "PUT",
       headers: {
