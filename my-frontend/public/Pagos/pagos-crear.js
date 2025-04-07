@@ -43,7 +43,7 @@ document.querySelector('.form-container form').addEventListener('submit', functi
   };
 
   // Enviar los datos con fetch
-  fetch('http://localhost:8084/api/payments/save', {
+  fetch('https://backend-int-production.up.railway.app/api/payments/save', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
