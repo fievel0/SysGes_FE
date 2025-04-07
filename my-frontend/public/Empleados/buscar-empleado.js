@@ -80,8 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // Selecciona el endpoint de búsqueda según la opción activa
         const url = btnID.classList.contains("active")
-            ? `http://localhost:8084/api/employee/find/${valor}`
-            : `http://localhost:8084/api/employee/cedula/${valor}`;
+            ? `https://backend-int-production.up.railway.app/api/employee/find/${valor}`
+            : `https://backend-int-production.up.railway.app/api/employee/cedula/${valor}`;
         
         fetch(url)
             .then(response => {
@@ -108,10 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Selecciona el endpoint según la opción activa
         if (btnID.classList.contains("active")) {
             pendingDeleteValue = valor;
-            deleteEndpoint = `http://localhost:8084/api/employee/delete/${valor}`;
+            deleteEndpoint = `https://backend-int-production.up.railway.app/api/employee/delete/${valor}`;
         } else if (btnCedula.classList.contains("active")) {
             pendingDeleteValue = valor;
-            deleteEndpoint = `http://localhost:8084/api/employee/deletee/${valor}`;
+            deleteEndpoint = `https://backend-int-production.up.railway.app/api/employee/deletee/${valor}`;
         } else {
             showError("Por favor, selecciona una opción de búsqueda");
             return;
@@ -171,12 +171,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let url = "";
         if (btnID.classList.contains("active")) {
             const idEmployee = document.getElementById("editId").value.trim();
-            url = `http://localhost:8084/api/employee/update/${idEmployee}`;
+            url = `https://backend-int-production.up.railway.app/api/employee/update/${idEmployee}`;
             // Se incluye el id en el payload si fuera necesario
             payload.idEmployee = idEmployee;
         } else if (btnCedula.classList.contains("active")) {
             // Actualiza utilizando la cédula como identificador
-            url = `http://localhost:8084/api/employee/updatee/${cedEmployee}`;
+            url = `https://backend-int-production.up.railway.app/api/employee/updatee/${cedEmployee}`;
         } else {
             showError("Por favor, selecciona una opción de búsqueda");
             return;
