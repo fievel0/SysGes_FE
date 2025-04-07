@@ -43,7 +43,7 @@ document.querySelector('.form-container form').addEventListener('submit', functi
   };
 
   // Enviar los datos con fetch
-  fetch('https://backend-int-production.up.railway.app/api/payments/save', {
+  fetch('https://sysgesbe-production.up.railway.app/api/payments/save', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
