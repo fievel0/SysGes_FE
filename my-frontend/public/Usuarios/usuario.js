@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let users = [];
 
   // Realiza la solicitud GET usando Fetch de forma automática
-  fetch('http://localhost:8084/api/login/findAll')
+  fetch('https://backend-int-production.up.railway.app/api/login/findAll')
     .then(response => {
       if (!response.ok) {
         throw new Error('Error en la solicitud: ' + response.status);
