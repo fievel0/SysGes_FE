@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let orders = [];
 
   // Realiza la solicitud GET a la API de órdenes de reparación
-  fetch('http://localhost:8084/api/ord_rep/findAll')
+  fetch('https://backend-int-production.up.railway.app/api/ord_rep/findAll')
     .then(response => {
       if (!response.ok) {
         throw new Error('Error en la solicitud: ' + response.status);
