@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showError("Por favor ingresa un valor para la búsqueda");
             return;
         }
-        const url = `http://localhost:8084/api/login/findd/${valor}`;
+        const url = `https://backend-int-production.up.railway.app/api/login/findd/${valor}`;
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Evento para el botón de confirmación "Sí" en el modal
     confirmYes.addEventListener("click", () => {
         if (!pendingDeleteId) return;
-        const url = `http://localhost:8084/api/login/deletee/${pendingDeleteId}`;
+        const url = `https://backend-int-production.up.railway.app/api/login/deletee/${pendingDeleteId}`;
         fetch(url, { method: "DELETE" })
             .then(response => {
                 if (!response.ok) {
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = document.getElementById("editName").value.trim();
 
         const payload = { name };
-        const url = `http://localhost:8084/api/customer/update/${id}`;
+        const url = `https://backend-int-production.up.railway.app/api/customer/update/${id}`;
 
         fetch(url, {
             method: "PUT",
