@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Se asigna el número buscado a la variable global searchedId
     searchedId = valor;
-    const url = `http://localhost:8084/api/ord_rep/find/${valor}`;
+    const url = `https://backend-int-production.up.railway.app/api/ord_rep/find/${valor}`;
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Evento para confirmar el borrado
   confirmYes.addEventListener("click", () => {
     if (!pendingDeleteId) return;
-    const url = `http://localhost:8084/api/ord_rep/delete/${pendingDeleteId}`;
+    const url = `https://backend-int-production.up.railway.app/api/ord_rep/delete/${pendingDeleteId}`;
     fetch(url, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const payload = { deadline, tot_pay, addit_details, customer, equipment, employee };
 
     // Construir la URL de actualización utilizando el número buscado
-    const url = `http://localhost:8084/api/ord_rep/update/${searchedId}`;
+    const url = `https://backend-int-production.up.railway.app/api/ord_rep/update/${searchedId}`;
 
     fetch(url, {
       method: "PUT",
