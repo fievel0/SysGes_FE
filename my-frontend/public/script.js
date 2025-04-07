@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const datos = { email, password };
 
         // Realiza la petición POST al backend para autenticar al usuario
-        fetch("https://switchyard.proxy.rlwy.net:21642/api/login", {
+        fetch("https://switchyard.proxy.rlwy.net/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
