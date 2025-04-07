@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================
     // PROCESO DE LOGIN
     // ==========================
-
+/*
     // Obtiene el botón de inicio de sesión y el contenedor de mensajes
     const btnIniciar = document.querySelector(".btn-iniciar");
     const mensajeDiv = document.getElementById("mensaje");
@@ -89,5 +89,5 @@ document.addEventListener("DOMContentLoaded", () => {
         mensajeDiv.style.color = color;
         mensajeDiv.style.fontSize = "1.2em";
         mensajeDiv.style.marginBottom = "10px";
-    }
+    } */
 });
