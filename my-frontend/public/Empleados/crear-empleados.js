@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Consultar si la identificación ya está registrada
-            const checkResponse = await fetch(`http://localhost:8084/api/employee/find/${cedEmployee}`);
+            const checkResponse = await fetch(`https://backend-int-production.up.railway.app/api/employee/find/${cedEmployee}`);
 
             if (checkResponse.ok) {
                 // Si la respuesta es 200 OK, significa que la identificación ya existe
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8084/api/employee/save', {
+            const response = await fetch('https://backend-int-production.up.railway.app/api/employee/save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
