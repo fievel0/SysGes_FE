@@ -75,8 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const url = btnID.classList.contains("active")
-            ? `http://localhost:8084/api/customer/find/${valor}`
-            : `http://localhost:8084/api/customer/cedula/${valor}`;
+            ? `https://backend-int-production.up.railway.app/api/customer/find/${valor}`
+            : `https://backend-int-production.up.railway.app/api/customer/cedula/${valor}`;
         
         fetch(url)
             .then(response => {
@@ -117,8 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Verifica cuál es la búsqueda activa y arma el endpoint correspondiente
         const url = btnID.classList.contains("active")
-            ? `http://localhost:8084/api/customer/delete/${pendingDeleteId}`
-            : `http://localhost:8084/api/customer/deletee/${pendingDeleteId}`;
+            ? `https://backend-int-production.up.railway.app/api/customer/delete/${pendingDeleteId}`
+            : `https://backend-int-production.up.railway.app/api/customer/deletee/${pendingDeleteId}`;
         
         fetch(url, { method: "DELETE" })
             .then(response => {
@@ -162,10 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let identifier, url;
         if (btnID.classList.contains("active")) {
             identifier = idField.value.trim();
-            url = `http://localhost:8084/api/customer/update/${identifier}`;
+            url = `https://backend-int-production.up.railway.app/api/customer/update/${identifier}`;
         } else if (btnCedula.classList.contains("active")) {
             identifier = cardField.value.trim();
-            url = `http://localhost:8084/api/customer/updatee/${identifier}`;
+            url = `https://backend-int-production.up.railway.app/api/customer/updatee/${identifier}`;
         } else {
             showError("Por favor, selecciona una opción de búsqueda (ID o Cédula) para actualizar");
             return;
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       try {
         // Consultar si la identificación ya está registrada
-        const checkResponse = await fetch(`http://localhost:8084/api/customer/find/${cardIdentifi}`);
+        const checkResponse = await fetch(`https://backend-int-production.up.railway.app/api/customer/find/${cardIdentifi}`);
   
         if (checkResponse.ok) {
           // Si la respuesta es 200 OK, significa que la identificación ya existe
@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
   
       try {
-        const response = await fetch('http://localhost:8084/api/customer/save', {
+        const response = await fetch('https://backend-int-production.up.railway.app/api/customer/save', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
