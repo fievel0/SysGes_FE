@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let payments = [];
 
   // Realiza la solicitud GET usando Fetch de forma automática
-  fetch('https://backend-int-production.up.railway.app/api/payments/findAll')
+  fetch('https://sysgesbe-production.up.railway.app/api/payments/findAll')
     .then(response => {
       if (!response.ok) {
         throw new Error('Error en la solicitud: ' + response.status);
