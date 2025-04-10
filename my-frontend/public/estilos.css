@@ -155,7 +155,25 @@
         margin-left: 93rem;
     }
 }
-
+.Volver {
+    position: absolute;
+    display: inline-block; /* Asegura que el ancho se ajuste al contenido */
+    text-decoration: none; /* Quita el subrayado */
+    padding: 10px;
+    background-color: rgb(161, 147, 72);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: -90rem;
+    width: auto; /* Hace que el ancho se ajuste al texto */
+    text-align: center;
+    margin-top: -1rem;
+}
+.Volver:hover {
+    background-color: rgb(93, 83, 35);
+}
 /* Media query para pantallas muy grandes (4K) */
 @media screen and (min-width: 2560px) and (min-height: 1537px) {
     .Formulario {
