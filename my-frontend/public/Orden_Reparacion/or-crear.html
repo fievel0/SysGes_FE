@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>INT-SOLUTIONS Control de Equipos</title>
   <link rel="stylesheet" href="or-crear.css">
-  <link rel="icon" type="image/png" href="./pnglogo.png"> 
+  <link rel="icon" type="image/png" href="./pnglogo.png">
 </head>
 <body>
   <!-- Título y logo -->
   <div class="cabeza">
     <img class="Logo" src="./pnglogo.png" alt="LOGO-INT">
     <div class="Titulo">INT-SOLUTIONS</div>
-    <button class="BotonModoOscuro"  id="btn-dark-mode">🌑</button>
-
+    <button class="BotonModoOscuro" id="btn-dark-mode">🌑</button>
   </div>
   
   <!-- Subtítulo y botones -->
@@ -39,15 +38,33 @@
       <label for="detalles">Detalles Adicionales:</label>
       <textarea id="detalles" name="detalles" rows="4" required></textarea>
       
+      <!-- Contenedores para datos del Cliente -->
+      <label for="cedula_cliente">Cédula Cliente:</label>
+      <div class="cliente-container">
+        <input type="number" id="cedula_cliente" name="cedula_cliente" required>
+        <button id="buscar_cedula_cliente" class="buscar-btn" type="button">Buscar</button>
+      </div>
+      
       <label for="idCliente">ID Cliente:</label>
-      <input type="text" id="idCliente" name="idCliente" required>
+      <div class="cliente-container">
+        <input type="text" id="idCliente" name="idCliente" required>
+        <button id="buscar_id_cliente" class="buscar-btn" type="button">Buscar</button>
+      </div>
+      
+      
       
       <label for="idEquipo">ID Equipo:</label>
       <input type="text" id="idEquipo" name="idEquipo" required>
+      <!-- Contenedor para datos del Empleado -->
+      <label for="cedula_empleado">Cédula Empleado:</label>
+      <div class="empleado-container">
+        <input type="number" id="cedula_empleado" name="cedula_empleado" required>
+        <button id="buscar_cedula_empleado" class="buscar-btn" type="button">Buscar</button>
+      </div>
       
+      <!-- Campo para ID Empleado (sin contenedor) -->
       <label for="idEmpleado">ID Empleado:</label>
       <input type="text" id="idEmpleado" name="idEmpleado" required>
-      
       <button class="Guardar" type="submit">Guardar</button>
     </form>
     <div class="mensajee" id="mensaje"></div>
