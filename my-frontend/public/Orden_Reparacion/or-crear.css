@@ -235,6 +235,7 @@ input:focus {
 }
 .result-container{
     border: solid 2px red;
+    margin-left:10rem;
 }
 /* =======================
    Media Queries
