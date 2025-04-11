@@ -136,11 +136,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const money_pay = money_payElem.value.trim();
         const money_b_pay = money_b_payElem.value.trim();
         
-        // Se arma el payload con el nuevo dato y el identificador
+        // Realizamos la resta: nuevo saldo = Saldo - Abono
+        const saldoActual = parseFloat(money_pay);
+        const abono = parseFloat(money_b_pay);
+        if (isNaN(saldoActual) || isNaN(abono)) {
+            showError("El valor de Saldo y Abono deben ser numéricos.");
+            return;
+        }
+        const nuevoSaldo = saldoActual - abono;
+
+        // Se arma el payload con el nuevo saldo
         const payload = {
-            order_id: parseInt(valor), // se asume que el valor es numérico
+            order_id: parseInt(valor),
             date_pay,
-            money_pay,
+            money_pay: nuevoSaldo,  // Aquí se guarda el saldo resultante
             money_b_pay
         };
 
@@ -159,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.text();
         })
         .then(() => {
-            resultContainer.innerHTML = `<p style="color: green;">Registro Actualizado</p>`;
+            resultContainer.innerHTML = `<p style="color: green;">Registro Actualizado. Nuevo Saldo: ${nuevoSaldo}</p>`;
             setTimeout(() => {
                 clearData();
             }, 2000);
@@ -168,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showError(error.message);
         });
     });
+
     const btnDarkMode = document.getElementById("btn-dark-mode");
 
     // Aplicar el modo oscuro si estaba activado
