@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
       paymentDiv.classList.add('customer');
       paymentDiv.innerHTML = `
         <p><strong>Fecha de Pago:</strong> ${payment.date_pay}</p>
-        <p><strong>Monto Pagado:</strong> ${payment.money_pay}</p>
-        <p><strong>Monto Pendiente:</strong> ${payment.money_b_pay}</p>
+        <p><strong>Saldo:</strong> ${payment.money_pay}</p>
+        <p><strong>Abono:</strong> ${payment.money_b_pay}</p>
         <p><strong>ID Orden:</strong> ${payment.order_id}</p>
       `;
       contenedorDatos.appendChild(paymentDiv);
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
       paymentDiv.innerHTML = `
         <p><strong>ID Pago:</strong> ${payment.id_pay}</p>
         <p><strong>Fecha de Pago:</strong> ${payment.date_pay}</p>
-        <p><strong>Monto Pagado:</strong> ${payment.money_pay}</p>
-        <p><strong>Monto Pendiente:</strong> ${payment.money_b_pay}</p>
+        <p><strong>Saldo:</strong> ${payment.money_pay}</p>
+        <p><strong>Abono:</strong> ${payment.money_b_pay}</p>
         <p><strong>ID Orden:</strong> ${payment.order_id}</p>
       `;
       contenedorDatos.appendChild(paymentDiv);
