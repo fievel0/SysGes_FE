@@ -89,6 +89,28 @@
     background-color: rgb(93, 83, 35);
 }
 
+.Volver {
+    position: absolute;
+    width: 12%;
+    padding: 10px;
+    background-color: rgb(161, 147, 72);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-left: -18rem;
+    text-decoration: none;
+    margin-top: -2.6rem; 
+
+}
+
+/* Cambia el color del botón cuando el usuario pasa el mouse */
+.Volver:hover {
+    background-color: rgb(93, 83, 35);
+}
+
+
 /* =======================
    MEDIA QUERIES
 ========================== */
@@ -106,6 +128,30 @@
     .Logo {
         width: 120px;  
     }
+    .Volver {
+        position: absolute;
+        width: 6%;
+        padding: 10px;
+        background-color: rgb(161, 147, 72);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        cursor: pointer;
+        margin-left: -43rem;
+        margin-top: -1.5rem;
+        text-decoration: none;    
+    }
+    
+    /* Cambia el color del botón cuando el usuario pasa el mouse */
+    .Volver:hover {
+        background-color: rgb(93, 83, 35);
+    }
+
+    .BotonModoOscuro{
+        margin-left: 40rem;
+        margin-top: -7.3rem;
+    }
 }
 
 /* Media query para pantallas grandes (más de 1200px) */
@@ -119,6 +165,8 @@
     .Titulo {
         font-size: 3em; 
         margin-top: 8rem;
+        
+        
     }
 
     .Logo {
@@ -154,26 +202,29 @@
         margin-top: -13rem;
         margin-left: 93rem;
     }
+    .Volver {
+        position: absolute;
+        width: 3.5%;
+        padding: 10px;
+        background-color: rgb(161, 147, 72);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        cursor: pointer;
+        margin-left: -90rem;
+        text-decoration: none; 
+        margin-top: -1rem;/* Esto elimina el subrayado */
+    
+    }
+    
+    /* Cambia el color del botón cuando el usuario pasa el mouse */
+    .Volver:hover {
+        background-color: rgb(93, 83, 35);
+    }
+    
 }
-.Volver {
-    position: absolute;
-    display: inline-block; /* Asegura que el ancho se ajuste al contenido */
-    text-decoration: none; /* Quita el subrayado */
-    padding: 10px;
-    background-color: rgb(161, 147, 72);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-left: -90rem;
-    width: auto; /* Hace que el ancho se ajuste al texto */
-    text-align: center;
-    margin-top: -1rem;
-}
-.Volver:hover {
-    background-color: rgb(93, 83, 35);
-}
+
 /* Media query para pantallas muy grandes (4K) */
 @media screen and (min-width: 2560px) and (min-height: 1537px) {
     .Formulario {
@@ -181,7 +232,9 @@
     }
 
     .Titulo {
-        font-size: 6em;  
+        font-size: 6em; 
+        
+ 
     }
 
     .Logo {
