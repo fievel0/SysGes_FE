@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
       messageDiv.remove();
     }, 3000);
   };
-  
 
   // Función para quitar la clase "active" de ambos botones
   const clearSelected = () => {
@@ -76,12 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
           </select>
         </p>
         <p>
-        <strong>Cédula Cliente:</strong>
-        <input type="text" class="equip-cedula" value="">
-        <button type="button" class="btn-buscar-cedula">Buscar</button>
-      </p>
-      <!-- Contenedor donde se mostrarán los datos del cliente -->
-      <div class="cliente-container"></div>
+          <strong>Cédula Cliente:</strong>
+          <input type="text" class="equip-cedula" value="">
+          <button type="button" class="btn-buscar-cedula">Buscar</button>
+        </p>
+        <!-- Contenedor donde se mostrarán los datos del cliente -->
+        <div class="cliente-container"></div>
         <p><strong>ID Cliente:</strong> <input type="text" class="equip-idcustomer" value="${equipment.id_customer || ''}" readonly></p>
         <p><strong>Nombre Cliente:</strong> <input type="text" class="equip-name" value="${equipment.name || ''}" readonly></p>
         ${
@@ -156,45 +155,50 @@ document.addEventListener("DOMContentLoaded", () => {
       const equipHTML = renderEquipment(equip, true);
       const equipDiv = document.createElement("div");
       equipDiv.innerHTML = equipHTML;
-      // --- Evento para el botón Buscar de Cedula Cliente ---
-  const btnBuscarCedula = equipDiv.querySelector(".btn-buscar-cedula");
-  if (btnBuscarCedula) {
-    btnBuscarCedula.addEventListener("click", () => {
-      const cedula = equipDiv.querySelector(".equip-cedula").value.trim();
-      // Verificar que se haya ingresado un valor
-      if (!cedula) {
-        const clienteContainer = equipDiv.querySelector(".cliente-container");
-        clienteContainer.innerHTML = `<p style="color:red;">Por favor ingresa una cédula.</p>`;
-        return;
-      }
-      // Construir la URL del endpoint y hacer la petición fetch
-      const endpoint = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
-      fetch(endpoint)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("No se encontraron datos para la cédula proporcionada");
+
+      // --- Evento para el botón Buscar de Cédula Cliente ---
+      const btnBuscarCedula = equipDiv.querySelector(".btn-buscar-cedula");
+      if (btnBuscarCedula) {
+        btnBuscarCedula.addEventListener("click", () => {
+          const cedula = equipDiv.querySelector(".equip-cedula").value.trim();
+          console.log("Buscando datos para la cédula:", cedula); // Debug
+          const clienteContainer = equipDiv.querySelector(".cliente-container");
+
+          // Verificar que se haya ingresado un valor
+          if (!cedula) {
+            clienteContainer.innerHTML = `<p style="color:red;">Por favor ingresa una cédula.</p>`;
+            return;
           }
-          return response.json();
-        })
-        .then(cliente => {
-          // Mostrar los datos del cliente en el contenedor
-          const clienteContainer = equipDiv.querySelector(".cliente-container");
-          clienteContainer.innerHTML = `
-            <div class="cliente">
-              <p><strong>ID:</strong> ${cliente.id_customer || ''}</p>
-              <p><strong>Nombre:</strong> ${cliente.name || ''}</p>
-              <p><strong>Identificación:</strong> ${cliente.cardIdentifi || ''}</p>
-              <p><strong>Teléfono:</strong> ${cliente.phone || ''}</p>
-              <p><strong>Correo:</strong> ${cliente.mail || ''}</p>
-            </div>
-          `;
-        })
-        .catch(error => {
-          const clienteContainer = equipDiv.querySelector(".cliente-container");
-          clienteContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+
+          // Construir la URL del endpoint y hacer la petición fetch
+          const endpoint = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
+          fetch(endpoint)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("No se encontraron datos para la cédula proporcionada");
+              }
+              return response.json();
+            })
+            .then(cliente => {
+              console.log("Respuesta del cliente:", cliente); // Debug
+              // Mostrar los datos del cliente en el contenedor
+              clienteContainer.innerHTML = `
+                <div class="cliente">
+                  <p><strong>ID:</strong> ${cliente.id_customer || ''}</p>
+                  <p><strong>Nombre:</strong> ${cliente.name || ''}</p>
+                  <p><strong>Identificación:</strong> ${cliente.cardIdentifi || ''}</p>
+                  <p><strong>Teléfono:</strong> ${cliente.phone || ''}</p>
+                  <p><strong>Correo:</strong> ${cliente.mail || ''}</p>
+                </div>
+              `;
+            })
+            .catch(error => {
+              console.error("Error en búsqueda por cédula:", error); // Debug
+              clienteContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+            });
         });
-    });
-  }
+      }
+
       // Asignar evento al botón Borrar (inline)
       const btnDelete = equipDiv.querySelector(".Borrar");
       if (btnDelete) {
@@ -210,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
               return response.text();
             })
             .then(() => {
-              // Muestra mensaje similar a la búsqueda por ID Equipo
               showGlobalMessage(`Equipo con ID ${equipmentId} eliminado correctamente.`, "green");
               // Eliminamos la tarjeta del DOM
               equipDiv.remove();
@@ -263,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     paginationContainer.innerHTML = "";
     const totalPages = Math.ceil(filteredEquipments.length / itemsPerPage);
     if (totalPages <= 1) return;
-  
+
     // Función para aplicar estilos en línea y el efecto hover
     const styleButton = (btn) => {
       btn.style.margin = "0 5px";
@@ -273,8 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.style.border = "none";
       btn.style.borderRadius = "5px";
       btn.style.cursor = "pointer";
-      
-  
+
       // Efecto hover con eventos
       btn.addEventListener("mouseenter", () => {
         btn.style.backgroundColor = "rgb(93, 83, 35)";
@@ -283,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.style.backgroundColor = "rgb(103, 93, 45)";
       });
     };
-  
+
     if (currentPage > 1) {
       const prevButton = document.createElement("button");
       prevButton.textContent = "Anterior";
@@ -295,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       paginationContainer.appendChild(prevButton);
     }
-  
+
     for (let i = 1; i <= totalPages; i++) {
       const btn = document.createElement("button");
       btn.textContent = i;
@@ -308,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       paginationContainer.appendChild(btn);
     }
-  
+
     if (currentPage < totalPages) {
       const nextButton = document.createElement("button");
       nextButton.textContent = "Siguiente";
@@ -321,7 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
       paginationContainer.appendChild(nextButton);
     }
   }
-  
 
   function showPaginatedEquipments() {
     currentPage = 1;
@@ -467,25 +468,26 @@ document.addEventListener("DOMContentLoaded", () => {
         resultContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
       });
   });
+
   const btnDarkMode = document.getElementById("btn-dark-mode");
 
-    // Aplicar el modo oscuro si estaba activado
-    if (localStorage.getItem("dark-mode") === "enabled") {
-        document.body.classList.add("dark-mode");
-        if (btnDarkMode) btnDarkMode.textContent = "☀️";
-    }
+  // Aplicar el modo oscuro si estaba activado
+  if (localStorage.getItem("dark-mode") === "enabled") {
+    document.body.classList.add("dark-mode");
+    if (btnDarkMode) btnDarkMode.textContent = "☀️";
+  }
 
-    if (btnDarkMode) {
-        btnDarkMode.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
+  if (btnDarkMode) {
+    btnDarkMode.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
 
-            if (document.body.classList.contains("dark-mode")) {
-                localStorage.setItem("dark-mode", "enabled");
-                btnDarkMode.textContent = "☀️";
-            } else {
-                localStorage.setItem("dark-mode", "disabled");
-                btnDarkMode.textContent = "🌑";
-            }
-        });
-    }
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("dark-mode", "enabled");
+        btnDarkMode.textContent = "☀️";
+      } else {
+        localStorage.setItem("dark-mode", "disabled");
+        btnDarkMode.textContent = "🌑";
+      }
+    });
+  }
 });
