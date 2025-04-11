@@ -248,7 +248,7 @@ input:focus {
         margin-left: 40rem;
     }
     .result-container {
-        margin-left: -35rem;
+        margin-left: 0;
     }
     .Subtitulo {
         margin-left: 45rem;
