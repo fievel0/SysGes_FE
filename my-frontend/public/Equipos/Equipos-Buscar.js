@@ -75,7 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <option value="CHATARRIZADO" ${equipment.condEquip === 'CHATARRIZADO' ? 'selected' : ''}>CHATARRIZADO</option>
           </select>
         </p>
-        <p><strong>Cédula Cliente:</strong> <input type="text" class="equip-cedula" value=""></p>
+        <p>
+        <strong>Cédula Cliente:</strong>
+        <input type="text" class="equip-cedula" value="">
+        <button type="button" class="btn-buscar-cedula">Buscar</button>
+      </p>
+      <!-- Contenedor donde se mostrarán los datos del cliente -->
+      <div class="cliente-container"></div>
         <p><strong>ID Cliente:</strong> <input type="text" class="equip-idcustomer" value="${equipment.id_customer || ''}" readonly></p>
         <p><strong>Nombre Cliente:</strong> <input type="text" class="equip-name" value="${equipment.name || ''}" readonly></p>
         ${
@@ -150,7 +156,45 @@ document.addEventListener("DOMContentLoaded", () => {
       const equipHTML = renderEquipment(equip, true);
       const equipDiv = document.createElement("div");
       equipDiv.innerHTML = equipHTML;
-
+      // --- Evento para el botón Buscar de Cedula Cliente ---
+  const btnBuscarCedula = equipDiv.querySelector(".btn-buscar-cedula");
+  if (btnBuscarCedula) {
+    btnBuscarCedula.addEventListener("click", () => {
+      const cedula = equipDiv.querySelector(".equip-cedula").value.trim();
+      // Verificar que se haya ingresado un valor
+      if (!cedula) {
+        const clienteContainer = equipDiv.querySelector(".cliente-container");
+        clienteContainer.innerHTML = `<p style="color:red;">Por favor ingresa una cédula.</p>`;
+        return;
+      }
+      // Construir la URL del endpoint y hacer la petición fetch
+      const endpoint = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
+      fetch(endpoint)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("No se encontraron datos para la cédula proporcionada");
+          }
+          return response.json();
+        })
+        .then(cliente => {
+          // Mostrar los datos del cliente en el contenedor
+          const clienteContainer = equipDiv.querySelector(".cliente-container");
+          clienteContainer.innerHTML = `
+            <div class="cliente">
+              <p><strong>ID:</strong> ${cliente.id_customer || ''}</p>
+              <p><strong>Nombre:</strong> ${cliente.name || ''}</p>
+              <p><strong>Identificación:</strong> ${cliente.cardIdentifi || ''}</p>
+              <p><strong>Teléfono:</strong> ${cliente.phone || ''}</p>
+              <p><strong>Correo:</strong> ${cliente.mail || ''}</p>
+            </div>
+          `;
+        })
+        .catch(error => {
+          const clienteContainer = equipDiv.querySelector(".cliente-container");
+          clienteContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        });
+    });
+  }
       // Asignar evento al botón Borrar (inline)
       const btnDelete = equipDiv.querySelector(".Borrar");
       if (btnDelete) {
