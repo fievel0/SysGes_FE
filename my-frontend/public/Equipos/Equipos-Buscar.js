@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Flag para distinguir modo de búsqueda: true si es búsqueda por dueño
   let searchByOwner = false;
 
-  // Función para mostrar mensajes globales con estilos (verde para éxito, rojo para error)
+  // Función para mostrar mensajes globales (verde para éxito, rojo para error)
   const showGlobalMessage = (msg, color) => {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("global-message");
@@ -74,13 +74,15 @@ document.addEventListener("DOMContentLoaded", () => {
             <option value="CHATARRIZADO" ${equipment.condEquip === 'CHATARRIZADO' ? 'selected' : ''}>CHATARRIZADO</option>
           </select>
         </p>
+        <!-- Sección para búsqueda de cliente (HTML similar al de tu ejemplo) -->
         <p>
-          <strong>Cédula Cliente:</strong>
-          <input type="text" class="equip-cedula" value="">
-          <button type="button" class="btn-buscar-cedula">Buscar</button>
+          <label for="id_customer">Cédula Cliente:</label>
+          <div class="cliente-container">
+            <input type="number" class="equip-cedula" name="id_customer" required>
+            <button type="button" class="buscar_cliente buscar-btn">Buscar</button>
+          </div>
+          <div class="cliente_buscado"></div>
         </p>
-        <!-- Contenedor donde se mostrarán los datos del cliente -->
-        <div class="cliente-container"></div>
         <p><strong>ID Cliente:</strong> <input type="text" class="equip-idcustomer" value="${equipment.id_customer || ''}" readonly></p>
         <p><strong>Nombre Cliente:</strong> <input type="text" class="equip-name" value="${equipment.name || ''}" readonly></p>
         ${
@@ -101,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
       resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
       return;
     }
-    // En búsqueda por ID Equipo se muestran los botones globales, por eso no se incluyen inline.
     resultContainer.innerHTML = renderEquipment(equipment, false);
   };
 
@@ -129,14 +130,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  // Funciones para la paginación en búsqueda por ID Dueño
+  // Función para renderizar la página con equipos (para búsqueda por ID Dueño)
   function renderPage() {
     resultContainer.innerHTML = "";
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pageEquipments = filteredEquipments.slice(startIndex, endIndex);
 
-    // Contenedor para el grid, ajustando el layout según la cantidad de elementos
+    // Crear contenedor para el grid
     const gridContainer = document.createElement("div");
     gridContainer.style.gap = "10px";
     if (pageEquipments.length === 1) {
@@ -150,39 +151,34 @@ document.addEventListener("DOMContentLoaded", () => {
       gridContainer.style.gridTemplateColumns = "repeat(3, 1fr)";
     }
 
-    // Para cada equipo, generamos la tarjeta con botones inline y asignamos eventos
+    // Para cada equipo, se genera la tarjeta y se asignan los eventos
     pageEquipments.forEach(equip => {
       const equipHTML = renderEquipment(equip, true);
       const equipDiv = document.createElement("div");
       equipDiv.innerHTML = equipHTML;
 
       // --- Evento para el botón Buscar de Cédula Cliente ---
-      const btnBuscarCedula = equipDiv.querySelector(".btn-buscar-cedula");
-      if (btnBuscarCedula) {
-        btnBuscarCedula.addEventListener("click", () => {
-          const cedula = equipDiv.querySelector(".equip-cedula").value.trim();
-          console.log("Buscando datos para la cédula:", cedula); // Debug
-          const clienteContainer = equipDiv.querySelector(".cliente-container");
-
-          // Verificar que se haya ingresado un valor
+      const btnBuscarCliente = equipDiv.querySelector(".buscar_cliente");
+      if (btnBuscarCliente) {
+        btnBuscarCliente.addEventListener("click", (e) => {
+          e.preventDefault();
+          const cedulaInput = equipDiv.querySelector(".equip-cedula");
+          const cedula = cedulaInput.value.trim();
+          const clienteBuscado = equipDiv.querySelector(".cliente_buscado");
           if (!cedula) {
-            clienteContainer.innerHTML = `<p style="color:red;">Por favor ingresa una cédula.</p>`;
+            clienteBuscado.innerHTML = `<p style="color:red;">Ingrese un ID válido.</p>`;
             return;
           }
-
-          // Construir la URL del endpoint y hacer la petición fetch
-          const endpoint = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
-          fetch(endpoint)
+          const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
+          fetch(url)
             .then(response => {
               if (!response.ok) {
-                throw new Error("No se encontraron datos para la cédula proporcionada");
+                throw new Error("No se encontró el cliente");
               }
               return response.json();
             })
             .then(cliente => {
-              console.log("Respuesta del cliente:", cliente); // Debug
-              // Mostrar los datos del cliente en el contenedor
-              clienteContainer.innerHTML = `
+              clienteBuscado.innerHTML = `
                 <div class="cliente">
                   <p><strong>ID:</strong> ${cliente.id_customer || ''}</p>
                   <p><strong>Nombre:</strong> ${cliente.name || ''}</p>
@@ -193,13 +189,12 @@ document.addEventListener("DOMContentLoaded", () => {
               `;
             })
             .catch(error => {
-              console.error("Error en búsqueda por cédula:", error); // Debug
-              clienteContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+              clienteBuscado.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
             });
         });
       }
 
-      // Asignar evento al botón Borrar (inline)
+      // Asignar evento para el botón Borrar (inline)
       const btnDelete = equipDiv.querySelector(".Borrar");
       if (btnDelete) {
         btnDelete.addEventListener("click", () => {
@@ -215,7 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(() => {
               showGlobalMessage(`Equipo con ID ${equipmentId} eliminado correctamente.`, "green");
-              // Eliminamos la tarjeta del DOM
               equipDiv.remove();
             })
             .catch(error => {
@@ -224,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // Asignar evento al botón Actualizar (inline)
+      // Asignar evento para el botón Actualizar (inline)
       const btnUpdate = equipDiv.querySelector(".Actualizar");
       if (btnUpdate) {
         btnUpdate.addEventListener("click", () => {
@@ -267,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalPages = Math.ceil(filteredEquipments.length / itemsPerPage);
     if (totalPages <= 1) return;
 
-    // Función para aplicar estilos en línea y el efecto hover
+    // Función para aplicar estilos en línea y efecto hover
     const styleButton = (btn) => {
       btn.style.margin = "0 5px";
       btn.style.padding = "8px 12px";
@@ -277,7 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.style.borderRadius = "5px";
       btn.style.cursor = "pointer";
 
-      // Efecto hover con eventos
       btn.addEventListener("mouseenter", () => {
         btn.style.backgroundColor = "rgb(93, 83, 35)";
       });
@@ -336,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnID.classList.add("active");
     clearData();
     searchByOwner = false;
-    // Se muestran los botones globales para actualizar y borrar (para búsqueda por ID Equipo)
+    // Se muestran botones globales para borrar/actualizar (por ID Equipo)
     btnBorrarGlobal.style.display = "inline-block";
     btnActualizarGlobal.style.display = "inline-block";
   });
@@ -346,12 +339,12 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCedula.classList.add("active");
     clearData();
     searchByOwner = true;
-    // Ocultamos los botones globales, pues en búsqueda por dueño se usan los botones inline en cada tarjeta
+    // Se ocultan botones globales; en búsqueda por dueño se usan botones inline
     btnBorrarGlobal.style.display = "none";
     btnActualizarGlobal.style.display = "none";
   });
 
-  // Evento submit del formulario: realiza la búsqueda según la opción activa
+  // Evento submit del formulario para realizar la búsqueda según la opción activa
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!btnID.classList.contains("active") && !btnCedula.classList.contains("active")) {
@@ -405,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Eventos globales para Borrar y Actualizar (para búsqueda por ID Equipo)
+  // Eventos globales para borrar y actualizar (para búsqueda por ID Equipo)
   btnBorrarGlobal.addEventListener("click", () => {
     if (!btnID.classList.contains("active")) {
       resultContainer.innerHTML = `<p style="color:red;">La opción Borrar sólo funciona en la búsqueda por ID Equipo</p>`;
@@ -471,7 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btnDarkMode = document.getElementById("btn-dark-mode");
 
-  // Aplicar el modo oscuro si estaba activado
+  // Aplicar modo oscuro si está activado
   if (localStorage.getItem("dark-mode") === "enabled") {
     document.body.classList.add("dark-mode");
     if (btnDarkMode) btnDarkMode.textContent = "☀️";
@@ -480,7 +473,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnDarkMode) {
     btnDarkMode.addEventListener("click", () => {
       document.body.classList.toggle("dark-mode");
-
       if (document.body.classList.contains("dark-mode")) {
         localStorage.setItem("dark-mode", "enabled");
         btnDarkMode.textContent = "☀️";
