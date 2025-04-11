@@ -57,6 +57,155 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
+  // --- Funcionalidad para buscar equipos por ID Cliente (ID Dueño) ---
+  const buscarEquiposBtn = document.getElementById("buscar_id_cliente");
+  const idClienteInput = document.getElementById("idCliente");
+  const resultContainer = document.querySelector(".result-container");
+
+  // Se crea el contenedor de paginación y se coloca justo después del result-container
+  const paginationContainer = document.createElement("div");
+  paginationContainer.id = "pagination";
+  resultContainer.parentNode.insertBefore(paginationContainer, resultContainer.nextSibling);
+
+  // Variables para la paginación
+  let filteredEquipments = [];
+  const itemsPerPage = 12; // Puedes ajustar este valor
+  let currentPage = 1;
+
+  // Función para generar el HTML de un equipo (sin botones de actualizar o borrar)
+  const renderEquipment = (equipment, showActions = false) => {
+    return `
+      <div class="equipment">
+        <p><strong>ID:</strong> ${equipment.id_equip || ''}</p>
+        <p><strong>Modelo:</strong> ${equipment.model_equip || ''}</p>
+        <p><strong>Marca:</strong> ${equipment.brand_equip || ''}</p>
+      </div>
+    `;
+  };
+
+  // Función para renderizar la página actual de equipos
+  function renderPage() {
+    resultContainer.innerHTML = "";
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageEquipments = filteredEquipments.slice(startIndex, endIndex);
+
+    const gridContainer = document.createElement("div");
+    gridContainer.style.gap = "10px";
+    // Ajustamos el grid según el número de equipos
+    if (pageEquipments.length === 1) {
+      gridContainer.style.display = "flex";
+      gridContainer.style.justifyContent = "center";
+    } else if (pageEquipments.length === 2) {
+      gridContainer.style.display = "grid";
+      gridContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
+    } else {
+      gridContainer.style.display = "grid";
+      gridContainer.style.gridTemplateColumns = "repeat(3, 1fr)";
+    }
+
+    pageEquipments.forEach(equip => {
+      gridContainer.innerHTML += renderEquipment(equip);
+    });
+
+    resultContainer.appendChild(gridContainer);
+  }
+
+  // Función para renderizar los controles de paginación
+  function renderPaginationControls() {
+    paginationContainer.innerHTML = "";
+    const totalPages = Math.ceil(filteredEquipments.length / itemsPerPage);
+    if (totalPages <= 1) return;
+
+    const styleButton = (btn) => {
+      btn.style.margin = "0 5px";
+      btn.style.padding = "8px 12px";
+      btn.style.backgroundColor = "rgb(103, 93, 45)";
+      btn.style.color = "white";
+      btn.style.border = "none";
+      btn.style.borderRadius = "5px";
+      btn.style.cursor = "pointer";
+      btn.addEventListener("mouseenter", () => { btn.style.backgroundColor = "rgb(93, 83, 35)"; });
+      btn.addEventListener("mouseleave", () => { btn.style.backgroundColor = "rgb(103, 93, 45)"; });
+    };
+
+    if (currentPage > 1) {
+      const prevButton = document.createElement("button");
+      prevButton.textContent = "Anterior";
+      styleButton(prevButton);
+      prevButton.addEventListener("click", () => {
+        currentPage--;
+        renderPage();
+        renderPaginationControls();
+      });
+      paginationContainer.appendChild(prevButton);
+    }
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      styleButton(btn);
+      if (i === currentPage) btn.disabled = true;
+      btn.addEventListener("click", () => {
+        currentPage = i;
+        renderPage();
+        renderPaginationControls();
+      });
+      paginationContainer.appendChild(btn);
+    }
+
+    if (currentPage < totalPages) {
+      const nextButton = document.createElement("button");
+      nextButton.textContent = "Siguiente";
+      styleButton(nextButton);
+      nextButton.addEventListener("click", () => {
+        currentPage++;
+        renderPage();
+        renderPaginationControls();
+      });
+      paginationContainer.appendChild(nextButton);
+    }
+  }
+
+  // Función para iniciar la visualización paginada
+  function showPaginatedEquipments() {
+    currentPage = 1;
+    renderPage();
+    renderPaginationControls();
+  }
+
+  // Evento click para el botón "Buscar Equipos" basado en el ID Cliente
+  buscarEquiposBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const idCliente = idClienteInput.value.trim();
+    if (idCliente === "") {
+      resultContainer.innerHTML = `<p style="color:red;">Por favor, ingrese un ID Cliente válido.</p>`;
+      paginationContainer.innerHTML = "";
+      return;
+    }
+    // Se obtiene todos los equipos y se filtran por id_customer
+    fetch("https://sysgesbe-production.up.railway.app/api/equipment/findAll")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Error en la solicitud de equipos");
+        }
+        return response.json();
+      })
+      .then(data => {
+        filteredEquipments = data.filter(equip => equip.id_customer == idCliente);
+        if (filteredEquipments.length === 0) {
+          resultContainer.innerHTML = `<p style="color:red;">No se encontraron equipos para este cliente.</p>`;
+          paginationContainer.innerHTML = "";
+        } else {
+          showPaginatedEquipments();
+        }
+      })
+      .catch(error => {
+        resultContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        paginationContainer.innerHTML = "";
+      });
+  });
+
   // --- Funcionalidad para guardar la orden ---
   const form = document.querySelector("form");
   const mensajeDiv = document.getElementById("mensaje");
