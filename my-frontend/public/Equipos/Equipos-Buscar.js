@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <option value="CHATARRIZADO" ${equipment.condEquip === 'CHATARRIZADO' ? 'selected' : ''}>CHATARRIZADO</option>
           </select>
         </p>
+        <p><strong>Cédula Cliente:</strong> <input type="text" class="equip-cedula" value=""></p>
         <p><strong>ID Cliente:</strong> <input type="text" class="equip-idcustomer" value="${equipment.id_customer || ''}" readonly></p>
         <p><strong>Nombre Cliente:</strong> <input type="text" class="equip-name" value="${equipment.name || ''}" readonly></p>
         ${
@@ -117,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       on_off_equip: equipmentDiv.querySelector(".equip-onoff")?.value === "Encendido",
       cau_dam_equip: equipmentDiv.querySelector(".equip-causa")?.value,
       condEquip: equipmentDiv.querySelector(".equip-cond")?.value,
+      cedula_cliente: equipmentDiv.querySelector(".equip-cedula")?.value,
       id_customer: equipmentDiv.querySelector(".equip-idcustomer")?.value,
       name: equipmentDiv.querySelector(".equip-name")?.value
     };
