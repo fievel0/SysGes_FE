@@ -83,32 +83,24 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   };
 
-  // Función para renderizar la página actual de equipos
+  // Función para renderizar la página actual de equipos en columna
   function renderPage() {
     resultContainer.innerHTML = "";
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pageEquipments = filteredEquipments.slice(startIndex, endIndex);
 
-    const gridContainer = document.createElement("div");
-    gridContainer.style.gap = "10px";
-    // Ajustamos el grid según el número de equipos
-    if (pageEquipments.length === 1) {
-      gridContainer.style.display = "flex";
-      gridContainer.style.justifyContent = "center";
-    } else if (pageEquipments.length === 2) {
-      gridContainer.style.display = "grid";
-      gridContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
-    } else {
-      gridContainer.style.display = "grid";
-      gridContainer.style.gridTemplateColumns = "repeat(3, 1fr)";
-    }
+    // Contenedor en bloque para mostrar los equipos en columna
+    const container = document.createElement("div");
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.gap = "10px";
 
     pageEquipments.forEach(equip => {
-      gridContainer.innerHTML += renderEquipment(equip);
+      container.innerHTML += renderEquipment(equip);
     });
 
-    resultContainer.appendChild(gridContainer);
+    resultContainer.appendChild(container);
   }
 
   // Función para renderizar los controles de paginación
