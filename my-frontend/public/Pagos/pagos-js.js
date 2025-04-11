@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mostramos id_pay, order_id, date_pay, money_pay y money_b_pay
     const showResult = (payment) => {
         if (!payment || Object.keys(payment).length === 0) {
-            resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
+            resultContainer.innerHTML = <p style="color: red;">No se encontró información.</p>;
             return;
         }
-        resultContainer.innerHTML = `
+        resultContainer.innerHTML = 
             <div class="payment"> 
                 <p><strong>Pago ID:</strong> <input type="text" id="editPaymentId" value="${payment.id_pay || ''}" readonly></p>
                 <p><strong>Fecha de Pago:</strong> <input type="text" id="editDatePay" value="${payment.date_pay || ''}"></p>
@@ -36,12 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p><strong>Abono:</strong> <input type="text" id="editMoneyBPay" value="${payment.money_b_pay || ''}"></p>
                 <p><strong>Order ID:</strong> <input type="text" id="editOrderId" value="${payment.order_id || ''}" readonly></p>            
             </div>
-        `;
+        ;
     };
 
     // Función para mostrar errores
     const showError = (error) => {
-        resultContainer.innerHTML = `<p style="color: red;">Error: ${error}</p>`;
+        resultContainer.innerHTML = <p style="color: red;">Error: ${error}</p>;
     };
 
     // --- Evento para búsqueda ---
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showError("Por favor ingresa un valor para la búsqueda");
             return;
         }
-        const url = `https://sysgesbe-production.up.railway.app/api/payments/find/${valor}`;
+        const url = https://sysgesbe-production.up.railway.app/api/payments/find/${valor};
         
         fetch(url)
             .then(response => {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmYes.addEventListener("click", () => {
         if (!pendingDeleteId) return;
         
-        const url = `https://sysgesbe-production.up.railway.app/api/payments/delete/${pendingDeleteId}`;
+        const url = https://sysgesbe-production.up.railway.app/api/payments/delete/${pendingDeleteId};
         
         fetch(url, { method: "DELETE" })
             .then(response => {
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(() => {
                 inputField.value = "";
-                resultContainer.innerHTML = `<p style="color: green;">Registro Eliminado</p>`;
+                resultContainer.innerHTML = <p style="color: green;">Registro Eliminado</p>;
                 pendingDeleteId = null;
                 modalConfirm.classList.add("hidden");
             })
@@ -136,25 +136,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const money_pay = money_payElem.value.trim();
         const money_b_pay = money_b_payElem.value.trim();
         
-        // Realizamos la resta: nuevo saldo = Saldo - Abono
-        const saldoActual = parseFloat(money_pay);
-        const abono = parseFloat(money_b_pay);
-        if (isNaN(saldoActual) || isNaN(abono)) {
-            showError("El valor de Saldo y Abono deben ser numéricos.");
-            return;
-        }
-        const nuevoSaldo = saldoActual - abono;
-
-        // Se arma el payload con el nuevo saldo
+        // Se arma el payload con el nuevo dato y el identificador
         const payload = {
-            order_id: parseInt(valor),
+            order_id: parseInt(valor), // se asume que el valor es numérico
             date_pay,
-            money_pay: nuevoSaldo,  // Aquí se guarda el saldo resultante
+            money_pay,
             money_b_pay
         };
 
         // La URL de actualización incluye el valor ingresado (ej. 13)
-        const url = `https://sysgesbe-production.up.railway.app/api/payments/update/${valor}`;
+        const url = https://sysgesbe-production.up.railway.app/api/payments/update/${valor};
 
         fetch(url, {
             method: "PUT",
@@ -168,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.text();
         })
         .then(() => {
-            resultContainer.innerHTML = `<p style="color: green;">Registro Actualizado. Nuevo Saldo: ${nuevoSaldo}</p>`;
+            resultContainer.innerHTML = <p style="color: green;">Registro Actualizado</p>;
             setTimeout(() => {
                 clearData();
             }, 2000);
@@ -177,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
             showError(error.message);
         });
     });
-
     const btnDarkMode = document.getElementById("btn-dark-mode");
 
     // Aplicar el modo oscuro si estaba activado
@@ -199,4 +189,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-});
+}); 
