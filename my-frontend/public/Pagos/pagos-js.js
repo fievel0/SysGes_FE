@@ -1,174 +1,158 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Referencias a elementos del DOM
-    const btnID = document.getElementById("btnID");
-    // Se eliminó el btnCedula ya que solo se usa búsqueda por ID
-    const inputField = document.querySelector(".CampoBuscar input");
-    const resultContainer = document.querySelector(".result-container");
-    const form = document.getElementById("CampoBuscar1");
-    const btnBorrar = document.getElementById("btnBorrar");
-    const btnActualizar = document.getElementById("btnActualizar");
+// Espera a que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', () => {
+  const contenedorDatos = document.getElementById('contenedorDatos');
+  const paginationContainer = document.getElementById('pagination');
+  const mostrarOpciones = document.getElementById('mostrarOpciones'); // Elemento select para elegir la vista
+  const itemsPerPage = 12;
+  let currentPage = 1;
+  let payments = [];
 
-    // Referencias a elementos del modal
-    const modalConfirm = document.getElementById("modalConfirm");
-    const confirmYes = document.getElementById("confirmYes");
-    const confirmNo = document.getElementById("confirmNo");
-
-    let pendingDeleteId = null;
-
-    // Función para limpiar campo de entrada y resultados
-    const clearData = () => {
-        inputField.value = "";
-        resultContainer.innerHTML = "";
-    };
-
-    // Función para mostrar el resultado formateado en inputs para edición
-    // Mostramos id_pay, order_id, date_pay, money_pay y money_b_pay
-    const showResult = (payment) => {
-        if (!payment || Object.keys(payment).length === 0) {
-            resultContainer.innerHTML = <p style="color: red;">No se encontró información.</p>;
-            return;
-        }
-        resultContainer.innerHTML = 
-            <div class="payment"> 
-                <p><strong>Pago ID:</strong> <input type="text" id="editPaymentId" value="${payment.id_pay || ''}" readonly></p>
-                <p><strong>Fecha de Pago:</strong> <input type="text" id="editDatePay" value="${payment.date_pay || ''}"></p>
-                <p><strong>Saldo:</strong> <input type="text" id="editMoneyPay" value="${payment.money_pay || ''}"></p>
-                <p><strong>Abono:</strong> <input type="text" id="editMoneyBPay" value="${payment.money_b_pay || ''}"></p>
-                <p><strong>Order ID:</strong> <input type="text" id="editOrderId" value="${payment.order_id || ''}" readonly></p>            
-            </div>
-        ;
-    };
-
-    // Función para mostrar errores
-    const showError = (error) => {
-        resultContainer.innerHTML = <p style="color: red;">Error: ${error}</p>;
-    };
-
-    // --- Evento para búsqueda ---
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const valor = inputField.value.trim();
-        if (valor === "") {
-            showError("Por favor ingresa un valor para la búsqueda");
-            return;
-        }
-        const url = https://sysgesbe-production.up.railway.app/api/payments/find/${valor};
-        
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("La información no existe");
-                }
-                return response.json();
-            })
-            .then(data => {
-                showResult(data);
-            })
-            .catch(error => {
-                showError(error.message);
-            });
+  // Realiza la solicitud GET usando Fetch de forma automática
+  fetch('https://sysgesbe-production.up.railway.app/api/payments/findAll')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error en la solicitud: ' + response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      payments = data;
+      if (mostrarOpciones && mostrarOpciones.value === 'todos') {
+        showAllPayments();
+      } else {
+        currentPage = 1;
+        showPaginatedPayments();
+      }
+    })
+    .catch(error => {
+      console.error('Hubo un problema con la solicitud Fetch:', error);
     });
 
-    // --- Evento para borrar ---
-    btnBorrar.addEventListener("click", () => {
-        const valor = inputField.value.trim();
-        if (valor === "") {
-            showError("Por favor ingresa el Order ID para borrar");
-            return;
-        }
-        
-        // Asigna el order_id pendiente de borrado y muestra el modal
-        pendingDeleteId = valor;
-        modalConfirm.classList.remove("hidden");
+  // Escucha cambios en el select para elegir la vista
+  if (mostrarOpciones) {
+    mostrarOpciones.addEventListener('change', (event) => {
+      if (event.target.value === 'todos') {
+        showAllPayments();
+      } else {
+        currentPage = 1;
+        showPaginatedPayments();
+      }
     });
+  }
 
-    // Evento para el botón de confirmación "Sí" en el modal
-    confirmYes.addEventListener("click", () => {
-        if (!pendingDeleteId) return;
-        
-        const url = https://sysgesbe-production.up.railway.app/api/payments/delete/${pendingDeleteId};
-        
-        fetch(url, { method: "DELETE" })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Error al borrar el registro");
-                }
-                return response.text();
-            })
-            .then(() => {
-                inputField.value = "";
-                resultContainer.innerHTML = <p style="color: green;">Registro Eliminado</p>;
-                pendingDeleteId = null;
-                modalConfirm.classList.add("hidden");
-            })
-            .catch(error => {
-                showError(error.message);
-                pendingDeleteId = null;
-                modalConfirm.classList.add("hidden");
-            });
+  // Función para mostrar todos los pagos
+  function showAllPayments() {
+    contenedorDatos.innerHTML = '';
+    payments.forEach(payment => {
+      const paymentDiv = document.createElement('div');
+      // Se utiliza la clase 'customer' para mantener el mismo fondo y estilo
+      paymentDiv.classList.add('customer');
+      paymentDiv.innerHTML = `
+        <p><strong>Fecha de Pago:</strong> ${payment.date_pay}</p>
+        <p><strong>Monto Pagado:</strong> ${payment.money_pay}</p>
+        <p><strong>Monto Pendiente:</strong> ${payment.money_b_pay}</p>
+        <p><strong>ID Orden:</strong> ${payment.order_id}</p>
+      `;
+      contenedorDatos.appendChild(paymentDiv);
     });
+    paginationContainer.innerHTML = '';
+  }
 
-    // Evento para el botón "Cancelar" en el modal
-    confirmNo.addEventListener("click", () => {
-        pendingDeleteId = null;
-        modalConfirm.classList.add("hidden");
+  // Función para mostrar pagos por páginas
+  function showPaginatedPayments() {
+    renderPage();
+    renderPaginationControls();
+  }
+
+  // Función para mostrar los pagos de la página actual
+  function renderPage() {
+    contenedorDatos.innerHTML = '';
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pagePayments = payments.slice(startIndex, endIndex);
+
+    pagePayments.forEach(payment => {
+      const paymentDiv = document.createElement('div');
+      // Se utiliza la clase 'customer' para mantener el estilo del fondo
+      paymentDiv.classList.add('customer');
+      paymentDiv.innerHTML = `
+        <p><strong>ID Pago:</strong> ${payment.id_pay}</p>
+        <p><strong>Fecha de Pago:</strong> ${payment.date_pay}</p>
+        <p><strong>Monto Pagado:</strong> ${payment.money_pay}</p>
+        <p><strong>Monto Pendiente:</strong> ${payment.money_b_pay}</p>
+        <p><strong>ID Orden:</strong> ${payment.order_id}</p>
+      `;
+      contenedorDatos.appendChild(paymentDiv);
     });
+  }
 
-    // --- Evento para actualizar ---
-    btnActualizar.addEventListener("click", () => {
-        // Se usa el valor ingresado para la búsqueda como identificador del registro
-        const valor = inputField.value.trim();
-        if (valor === "") {
-            showError("Por favor ingresa el Order ID para actualizar");
-            return;
-        }
-        // Se leen los valores modificables de los inputs mostrados en el resultado
-        const date_payElem = document.getElementById("editDatePay");
-        const money_payElem = document.getElementById("editMoneyPay");
-        const money_b_payElem = document.getElementById("editMoneyBPay");
+  // Función para generar los controles de paginación
+  function renderPaginationControls() {
+    paginationContainer.innerHTML = '';
+    const totalPages = Math.ceil(payments.length / itemsPerPage);
+    if (totalPages <= 1) return;
 
-        if (!date_payElem || !money_payElem || !money_b_payElem) {
-            showError("No hay registro para actualizar. Realiza una búsqueda primero.");
-            return;
-        }
+    // Botón "Anterior"
+    if (currentPage > 1) {
+      const prevButton = document.createElement('button');
+      prevButton.textContent = 'Anterior';
+      prevButton.addEventListener('click', () => {
+        currentPage--;
+        renderPage();
+        renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll suave al inicio
+      });
+      paginationContainer.appendChild(prevButton);
+    }
 
-        const date_pay = date_payElem.value.trim();
-        const money_pay = money_payElem.value.trim();
-        const money_b_pay = money_b_payElem.value.trim();
-        
-        // Se arma el payload con el nuevo dato y el identificador
-        const payload = {
-            order_id: parseInt(valor), // se asume que el valor es numérico
-            date_pay,
-            money_pay,
-            money_b_pay
-        };
+    // Determina el rango de botones numéricos a mostrar (máximo 3)
+    let startPage, endPage;
+    if (totalPages <= 3) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      if (currentPage === 1) {
+        startPage = 1;
+        endPage = 3;
+      } else if (currentPage === totalPages) {
+        startPage = totalPages - 2;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - 1;
+        endPage = currentPage + 1;
+      }
+    }
 
-        // La URL de actualización incluye el valor ingresado (ej. 13)
-        const url = https://sysgesbe-production.up.railway.app/api/payments/update/${valor};
+    // Crea los botones de número de página
+    for (let i = startPage; i <= endPage; i++) {
+      const pageButton = document.createElement('button');
+      pageButton.textContent = i;
+      if (i === currentPage) {
+        pageButton.disabled = true;
+      }
+      pageButton.addEventListener('click', () => {
+        currentPage = i;
+        renderPage();
+        renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll suave al inicio
+      });
+      paginationContainer.appendChild(pageButton);
+    }
 
-        fetch(url, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Error al actualizar el registro");
-            }
-            return response.text();
-        })
-        .then(() => {
-            resultContainer.innerHTML = <p style="color: green;">Registro Actualizado</p>;
-            setTimeout(() => {
-                clearData();
-            }, 2000);
-        })
-        .catch(error => {
-            showError(error.message);
-        });
-    });
-    const btnDarkMode = document.getElementById("btn-dark-mode");
+    // Botón "Siguiente"
+    if (currentPage < totalPages) {
+      const nextButton = document.createElement('button');
+      nextButton.textContent = 'Siguiente';
+      nextButton.addEventListener('click', () => {
+        currentPage++;
+        renderPage();
+        renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll suave al inicio
+      });
+      paginationContainer.appendChild(nextButton);
+    }
+  }
+  const btnDarkMode = document.getElementById("btn-dark-mode");
 
     // Aplicar el modo oscuro si estaba activado
     if (localStorage.getItem("dark-mode") === "enabled") {
@@ -189,4 +173,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-}); 
+});
