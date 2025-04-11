@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Temperatura:</strong> <input type="text" class="equip-temp" value="${equipment.temp_equip || ''}"></p>
         <p><strong>Encendido/Apagado:</strong> <input type="text" class="equip-onoff" value="${equipment.on_off_equip ? 'Encendido' : 'Apagado'}" readonly></p>
         <p><strong>Causa del Daño:</strong> <input type="text" class="equip-causa" value="${equipment.cau_dam_equip || ''}"></p>
-        <p><strong>Condición del Equipo:</strong> 
+        <p><strong>Condición del Equipo:</strong>
           <select class="equip-cond">
             <option value="ENTREGADO_REPARADO" ${equipment.condEquip === 'ENTREGADO_REPARADO' ? 'selected' : ''}>ENTREGADO REPARADO</option>
             <option value="ENTREGADO_SIN_REPARACION" ${equipment.condEquip === 'ENTREGADO_SIN_REPARACION' ? 'selected' : ''}>ENTREGADO SIN REPARACION</option>
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <option value="CHATARRIZADO" ${equipment.condEquip === 'CHATARRIZADO' ? 'selected' : ''}>CHATARRIZADO</option>
           </select>
         </p>
-        <!-- Sección para búsqueda de cliente (HTML similar al de tu ejemplo) -->
+        <!-- Sección para búsqueda de cliente (HTML similar a tu ejemplo) -->
         <p>
           <label for="id_customer">Cédula Cliente:</label>
           <div class="cliente-container">
@@ -97,13 +97,58 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   };
 
+  // Función para adjuntar el listener al botón buscar cliente dentro de una tarjeta
+  const attachBuscarClienteListener = (container) => {
+    const btnBuscarCliente = container.querySelector(".buscar_cliente");
+    if (btnBuscarCliente) {
+      btnBuscarCliente.addEventListener("click", (e) => {
+        e.preventDefault();
+        const cedulaInput = container.querySelector(".equip-cedula");
+        const cedula = cedulaInput.value.trim();
+        const clienteBuscado = container.querySelector(".cliente_buscado");
+        if (!cedula) {
+          clienteBuscado.innerHTML = `<p style="color:red;">Ingrese un ID válido.</p>`;
+          return;
+        }
+        const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
+        fetch(url)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("No se encontró el cliente");
+            }
+            return response.json();
+          })
+          .then(cliente => {
+            clienteBuscado.innerHTML = `
+              <div class="cliente">
+                <p><strong>ID:</strong> ${cliente.id_customer || ''}</p>
+                <p><strong>Nombre:</strong> ${cliente.name || ''}</p>
+                <p><strong>Identificación:</strong> ${cliente.cardIdentifi || ''}</p>
+                <p><strong>Teléfono:</strong> ${cliente.phone || ''}</p>
+                <p><strong>Correo:</strong> ${cliente.mail || ''}</p>
+              </div>
+            `;
+          })
+          .catch(error => {
+            clienteBuscado.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+          });
+      });
+    }
+  };
+
   // Función para mostrar un equipo individual (búsqueda por ID Equipo)
   const showEquipment = (equipment) => {
     if (!equipment || Object.keys(equipment).length === 0) {
       resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
       return;
     }
+    // Se genera el HTML (sin botones inline para borrar/actualizar)
     resultContainer.innerHTML = renderEquipment(equipment, false);
+    // Adjuntar el listener para el botón Buscar en este equipo
+    const equipmentDiv = resultContainer.querySelector(".equipment");
+    if (equipmentDiv) {
+      attachBuscarClienteListener(equipmentDiv);
+    }
   };
 
   // Función para extraer los datos de un equipo desde un contenedor específico
@@ -130,14 +175,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  // Función para renderizar la página con equipos (para búsqueda por ID Dueño)
+  // Función para renderizar la página con equipos (búsqueda por ID Dueño)
   function renderPage() {
     resultContainer.innerHTML = "";
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pageEquipments = filteredEquipments.slice(startIndex, endIndex);
 
-    // Crear contenedor para el grid
     const gridContainer = document.createElement("div");
     gridContainer.style.gap = "10px";
     if (pageEquipments.length === 1) {
@@ -151,50 +195,15 @@ document.addEventListener("DOMContentLoaded", () => {
       gridContainer.style.gridTemplateColumns = "repeat(3, 1fr)";
     }
 
-    // Para cada equipo, se genera la tarjeta y se asignan los eventos
     pageEquipments.forEach(equip => {
       const equipHTML = renderEquipment(equip, true);
       const equipDiv = document.createElement("div");
       equipDiv.innerHTML = equipHTML;
 
-      // --- Evento para el botón Buscar de Cédula Cliente ---
-      const btnBuscarCliente = equipDiv.querySelector(".buscar_cliente");
-      if (btnBuscarCliente) {
-        btnBuscarCliente.addEventListener("click", (e) => {
-          e.preventDefault();
-          const cedulaInput = equipDiv.querySelector(".equip-cedula");
-          const cedula = cedulaInput.value.trim();
-          const clienteBuscado = equipDiv.querySelector(".cliente_buscado");
-          if (!cedula) {
-            clienteBuscado.innerHTML = `<p style="color:red;">Ingrese un ID válido.</p>`;
-            return;
-          }
-          const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
-          fetch(url)
-            .then(response => {
-              if (!response.ok) {
-                throw new Error("No se encontró el cliente");
-              }
-              return response.json();
-            })
-            .then(cliente => {
-              clienteBuscado.innerHTML = `
-                <div class="cliente">
-                  <p><strong>ID:</strong> ${cliente.id_customer || ''}</p>
-                  <p><strong>Nombre:</strong> ${cliente.name || ''}</p>
-                  <p><strong>Identificación:</strong> ${cliente.cardIdentifi || ''}</p>
-                  <p><strong>Teléfono:</strong> ${cliente.phone || ''}</p>
-                  <p><strong>Correo:</strong> ${cliente.mail || ''}</p>
-                </div>
-              `;
-            })
-            .catch(error => {
-              clienteBuscado.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
-            });
-        });
-      }
+      // Adjuntar el listener de búsqueda para la cédula del cliente
+      attachBuscarClienteListener(equipDiv);
 
-      // Asignar evento para el botón Borrar (inline)
+      // Evento para el botón Borrar (inline)
       const btnDelete = equipDiv.querySelector(".Borrar");
       if (btnDelete) {
         btnDelete.addEventListener("click", () => {
@@ -218,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // Asignar evento para el botón Actualizar (inline)
+      // Evento para el botón Actualizar (inline)
       const btnUpdate = equipDiv.querySelector(".Actualizar");
       if (btnUpdate) {
         btnUpdate.addEventListener("click", () => {
@@ -230,9 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const updateUrl = `https://sysgesbe-production.up.railway.app/api/equipment/update/${equipmentData.id_equip}`;
           fetch(updateUrl, {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(equipmentData)
           })
             .then(response => {
@@ -261,7 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalPages = Math.ceil(filteredEquipments.length / itemsPerPage);
     if (totalPages <= 1) return;
 
-    // Función para aplicar estilos en línea y efecto hover
     const styleButton = (btn) => {
       btn.style.margin = "0 5px";
       btn.style.padding = "8px 12px";
@@ -270,13 +276,8 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.style.border = "none";
       btn.style.borderRadius = "5px";
       btn.style.cursor = "pointer";
-
-      btn.addEventListener("mouseenter", () => {
-        btn.style.backgroundColor = "rgb(93, 83, 35)";
-      });
-      btn.addEventListener("mouseleave", () => {
-        btn.style.backgroundColor = "rgb(103, 93, 45)";
-      });
+      btn.addEventListener("mouseenter", () => { btn.style.backgroundColor = "rgb(93, 83, 35)"; });
+      btn.addEventListener("mouseleave", () => { btn.style.backgroundColor = "rgb(103, 93, 45)"; });
     };
 
     if (currentPage > 1) {
@@ -329,7 +330,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btnID.classList.add("active");
     clearData();
     searchByOwner = false;
-    // Se muestran botones globales para borrar/actualizar (por ID Equipo)
     btnBorrarGlobal.style.display = "inline-block";
     btnActualizarGlobal.style.display = "inline-block";
   });
@@ -339,12 +339,11 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCedula.classList.add("active");
     clearData();
     searchByOwner = true;
-    // Se ocultan botones globales; en búsqueda por dueño se usan botones inline
     btnBorrarGlobal.style.display = "none";
     btnActualizarGlobal.style.display = "none";
   });
 
-  // Evento submit del formulario para realizar la búsqueda según la opción activa
+  // Evento submit del formulario: búsqueda según opción activa
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!btnID.classList.contains("active") && !btnCedula.classList.contains("active")) {
@@ -356,7 +355,6 @@ document.addEventListener("DOMContentLoaded", () => {
       resultContainer.innerHTML = `<p style="color:red;">Por favor ingresa un valor para la búsqueda</p>`;
       return;
     }
-
     // Búsqueda por ID Equipo
     if (btnID.classList.contains("active")) {
       const url = `https://sysgesbe-production.up.railway.app/api/equipment/find/${valor}`;
@@ -398,7 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Eventos globales para borrar y actualizar (para búsqueda por ID Equipo)
+  // Eventos globales para Borrar y Actualizar (búsqueda por ID Equipo)
   btnBorrarGlobal.addEventListener("click", () => {
     if (!btnID.classList.contains("active")) {
       resultContainer.innerHTML = `<p style="color:red;">La opción Borrar sólo funciona en la búsqueda por ID Equipo</p>`;
@@ -410,9 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     const deleteUrl = `https://sysgesbe-production.up.railway.app/api/equipment/delete/${equipmentId}`;
-    fetch(deleteUrl, {
-      method: "DELETE"
-    })
+    fetch(deleteUrl, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw new Error("Error al eliminar el equipo");
@@ -421,9 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(() => {
         showGlobalMessage(`Equipo con ID ${equipmentId} eliminado correctamente.`, "green");
-        setTimeout(() => {
-          clearData();
-        }, 3000);
+        setTimeout(() => { clearData(); }, 3000);
       })
       .catch(error => {
         resultContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
@@ -443,9 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateUrl = `https://sysgesbe-production.up.railway.app/api/equipment/update/${equipmentData.id_equip}`;
     fetch(updateUrl, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(equipmentData)
     })
       .then(response => {
@@ -463,13 +455,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const btnDarkMode = document.getElementById("btn-dark-mode");
-
-  // Aplicar modo oscuro si está activado
   if (localStorage.getItem("dark-mode") === "enabled") {
     document.body.classList.add("dark-mode");
     if (btnDarkMode) btnDarkMode.textContent = "☀️";
   }
-
   if (btnDarkMode) {
     btnDarkMode.addEventListener("click", () => {
       document.body.classList.toggle("dark-mode");
