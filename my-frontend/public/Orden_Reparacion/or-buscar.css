@@ -69,7 +69,8 @@ body {
     border-radius: 10px;
     margin-top: -30px; 
 }
-.BotonModoOscuro{
+
+.BotonModoOscuro {
     background-color: transparent; /* Hace el fondo transparente */
     border: none; /* Quita el borde */
     font-size: 40px; /* Aumenta el tamaño del texto */
@@ -77,7 +78,7 @@ body {
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
     margin-top: -0.5rem;
     margin-left: -3rem;
-    }
+}
 
 form {
     display: flex;
@@ -117,6 +118,24 @@ input:focus {
 }
 
 .Borrar:hover, .Actualizar:hover {
+    background-color: rgb(93, 83, 35);
+}
+
+/* Agregamos la clase botonDescargar con los mismos estilos */
+.botonDescargar {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: rgb(161, 147, 72);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    font-size: 1em;
+    margin-left: 50px;
+}
+
+.botonDescargar:hover {
     background-color: rgb(93, 83, 35);
 }
 
@@ -176,15 +195,18 @@ input:focus {
 .BotonesPrincipales, .CampoBuscar, .result-container, .action-buttons {
     margin-left: 20px;
 }
-.Borrar{
+
+.Borrar {
     margin-left: 50px;
 }
+
 .action-buttons {
     display: flex;
     gap: 60px;
 }
+
 @media screen and (min-width: 1559px) {
-    .BotonModoOscuro{
+    .BotonModoOscuro {
         background-color: transparent; /* Hace el fondo transparente */
         border: none; /* Quita el borde */
         font-size: 40px; /* Aumenta el tamaño del texto */
@@ -192,29 +214,31 @@ input:focus {
         cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
         margin-top: -0.5rem;
         margin-left: 66rem;
-        }
+    }
     
-    .Subtitulo{
-    margin-left: 35rem;
-    font-size: 35px;
+    .Subtitulo {
+        margin-left: 35rem;
+        font-size: 35px;
     }
     
     .botones-container button {
         padding: 15px 30px; /* Más grande en pantallas grandes */
         font-size: 1.3em;
-  }
-  .cuerpo{
-    display: flex;
-    flex-direction: column; /* Ajusta la altura en base a los hijos */
-    padding: 10px;
-    width: max-content;
-    margin-left: 45rem;
-  }
-  .cuerpo{
-    margin-left: 40rem;
-  }
-
+    }
+    
+    .cuerpo {
+        display: flex;
+        flex-direction: column; /* Ajusta la altura en base a los hijos */
+        padding: 10px;
+        width: max-content;
+        margin-left: 45rem;
+    }
+    
+    .cuerpo {
+        margin-left: 40rem;
+    }
 }
+
 /* Estilos para el modal */
 .modal {
     position: fixed;
@@ -227,61 +251,60 @@ input:focus {
     align-items: center;
     justify-content: center;
     z-index: 1000;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     text-align: center;
     width: 300px;
-  }
-  
-  .modal-buttons {
+}
+
+.modal-buttons {
     margin-top: 15px;
     display: flex;
     justify-content: space-around;
-  }
-  
-  .modal-buttons button {
+}
+
+.modal-buttons button {
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  #confirmYes {
+}
+
+#confirmYes {
     background-color: #008000;
     color: #fff;
-  }
-  
-  #confirmNo {
+}
+
+#confirmNo {
     background-color: #d32f2f;
     color: #fff;
-  }
-  
-  /* Clase para ocultar el modal */
-  .hidden {
+}
+
+/* Clase para ocultar el modal */
+.hidden {
     display: none;
-  }
-  /* =======================
+}
+
+/* =======================
    MODO OSCURO
 ========================== */
 .dark-mode {
     background-color: #121212;
     color: #e0e0e0;
-  }
-  
-  /* Ajusta el fondo, borde y color de los inputs en modo oscuro */
-  .dark-mode .Formulario input {
+}
+
+/* Ajusta el fondo, borde y color de los inputs en modo oscuro */
+.dark-mode .Formulario input {
     background-color: #1e1e1e;
     border: 1px solid #444;
     color: #e0e0e0;
-  }
-  
-  /* Cambiar el fondo del botón en modo oscuro */
-  .dark-mode .Formulario .btn-iniciar {
+}
+
+/* Cambiar el fondo del botón en modo oscuro */
+.dark-mode .Formulario .btn-iniciar {
     background-color: #333;
-  }
-  
-  
+}
