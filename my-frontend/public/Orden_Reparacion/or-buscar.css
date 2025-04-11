@@ -132,8 +132,8 @@ input:focus {
     cursor: pointer;
     transition: background 0.3s ease-in-out;
     font-size: 1em;
-    margin-left: 50px;
-    border: solid 2px red;
+    margin-left: 25px;
+    
 }
 
 .botonDescargar:hover {
