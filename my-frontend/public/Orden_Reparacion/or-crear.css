@@ -5,12 +5,7 @@ body {
     margin: 0;
     padding: 0;
 }
-.result-container{
-    display:flex;
-    margin-left: 30rem;
-    margin-right:1rem;
 
-}
 /* Botón Modo Oscuro */
 .BotonModoOscuro{
     background-color: transparent;
