@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="cliente_buscado"></div>
         </p>
-        <p><strong>ID Cliente:</strong> <input type="text" class="equip-idcustomer" value="${equipment.id_customer || ''}" readonly></p>
-        <p><strong>Nombre Cliente:</strong> <input type="text" class="equip-name" value="${equipment.name || ''}" readonly></p>
+        <p><strong>ID Cliente:</strong> <input type="text" class="equip-idcustomer" value="${equipment.id_customer || ''}" ></p>
+        <p><strong>Nombre Cliente:</strong> <input type="text" class="equip-name" value="${equipment.name || ''}" ></p>
         ${
           showActions
             ? `<div class="equipment-actions">
