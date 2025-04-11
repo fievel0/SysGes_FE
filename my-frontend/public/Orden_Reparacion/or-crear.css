@@ -7,7 +7,7 @@ body {
 }
 
 /* Botón Modo Oscuro */
-.BotonModoOscuro{
+.BotonModoOscuro {
     background-color: transparent;
     border: none;
     font-size: 40px;
@@ -122,8 +122,8 @@ input:focus {
     background-color: rgb(93, 83, 35);
 }
 
-.mensajee {    
-    margin-top: 20px; 
+.mensajee {
+    margin-top: 20px;
 }
 
 /* =======================
@@ -143,7 +143,8 @@ input:focus {
 .buscar-btn:hover {
     background-color: rgb(93, 83, 35);
 }
-.Descargar{
+
+.Descargar {
     padding: 8px 15px;
     font-size: 1em;
     background-color: rgb(161, 147, 72);
@@ -152,10 +153,13 @@ input:focus {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
+    margin-left: 50px;  /* Se añade margen izquierdo similar a Borrar */
 }
+
 .Descargar:hover {
     background-color: rgb(93, 83, 35);
 }
+
 /* =======================
    Otras reglas de botones (ID, Borrar, Actualizar, etc.)
 ========================= */
@@ -176,6 +180,23 @@ input:focus {
 
 .ID.active, .ID_Dueño.active {
     background-color: #008000;
+}
+
+/* Botón Actualizar (estilo similar a Descargar y Borrar) */
+.Actualizar {
+    padding: 8px 15px;
+    font-size: 1em;
+    background-color: rgb(161, 147, 72);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-left: 50px;  /* Se aplica el mismo margen izquierdo */
+}
+
+.Actualizar:hover {
+    background-color: rgb(93, 83, 35);
 }
 
 /* Estilos para el formulario de búsqueda */
