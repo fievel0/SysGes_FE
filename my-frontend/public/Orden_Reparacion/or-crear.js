@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Funcionalidad para buscar el cliente ---
-  const buscarBtn = document.getElementById("buscar_cedula_cliente");
-  const cedulaInput = document.getElementById("cedula_cliente");
+  // ============================
+  // Funcionalidad para buscar el cliente
+  // ============================
+  const buscarBtnCliente = document.getElementById("buscar_cedula_cliente");
+  const cedulaInputCliente = document.getElementById("cedula_cliente");
   const clienteBuscado = document.querySelector(".cliente_buscado");
 
-  // Función para mostrar la información del cliente
   const mostrarCliente = (cliente) => {
     if (!cliente || Object.keys(cliente).length === 0) {
       if (clienteBuscado) {
@@ -25,19 +26,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Función para mostrar errores
-  const mostrarError = (mensaje) => {
+  const mostrarErrorCliente = (mensaje) => {
     if (clienteBuscado) {
       clienteBuscado.innerHTML = `<p style="color: red;">Error: ${mensaje}</p>`;
     }
   };
 
-  // Evento click para el botón de búsqueda del cliente
-  buscarBtn.addEventListener("click", (e) => {
+  buscarBtnCliente.addEventListener("click", (e) => {
     e.preventDefault();
-    const cedula = cedulaInput.value.trim();
+    const cedula = cedulaInputCliente.value.trim();
     if (cedula === "") {
-      mostrarError("Ingrese una cédula válida.");
+      mostrarErrorCliente("Ingrese una cédula válida.");
       return;
     }
     // URL de la API para buscar el cliente mediante cédula
@@ -53,27 +52,80 @@ document.addEventListener("DOMContentLoaded", () => {
         mostrarCliente(data);
       })
       .catch(error => {
-        mostrarError(error.message);
+        mostrarErrorCliente(error.message);
       });
   });
 
-  // --- Funcionalidad para buscar equipos por ID Cliente (ID Dueño) ---
+  // ============================
+  // Funcionalidad para buscar empleado por Cédula (método agregado)
+  // ============================
+  const buscarBtnEmpleado = document.getElementById("buscar_cedula_empleado");
+  const cedulaInputEmpleado = document.getElementById("cedula_empleado");
+  const empleadoResultContainer = document.querySelector(".result-containerr");
+
+  const mostrarEmpleado = (empleado) => {
+    if (!empleado || Object.keys(empleado).length === 0) {
+      empleadoResultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
+      return;
+    }
+    empleadoResultContainer.innerHTML = `
+      <div class="empleado">
+        <p><strong>ID:</strong> ${empleado.idEmployee || ''}</p>
+        <p><strong>Nombre:</strong> ${empleado.nameEmployee || ''}</p>
+        <p><strong>Cargo:</strong> ${empleado.positionEmployee || ''}</p>
+        <p><strong>Cédula:</strong> ${empleado.cedEmployee || ''}</p>
+        <p><strong>Dirección:</strong> ${empleado.dirEmployee || ''}</p>
+        <p><strong>Teléfono:</strong> ${empleado.telEmpployee || ''}</p>
+      </div>
+    `;
+  };
+
+  const mostrarErrorEmpleado = (mensaje) => {
+    empleadoResultContainer.innerHTML = `<p style="color: red;">Error: ${mensaje}</p>`;
+  };
+
+  buscarBtnEmpleado.addEventListener("click", (e) => {
+    e.preventDefault();
+    const cedula = cedulaInputEmpleado.value.trim();
+    if (cedula === "") {
+      mostrarErrorEmpleado("Ingrese una cédula válida.");
+      return;
+    }
+    // URL de la API para buscar el empleado mediante cédula
+    const url = `https://sysgesbe-production.up.railway.app/api/employee/cedula/${cedula}`;
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("No se encontró el empleado");
+        }
+        return response.json();
+      })
+      .then(data => {
+        mostrarEmpleado(data);
+      })
+      .catch(error => {
+        mostrarErrorEmpleado(error.message);
+      });
+  });
+
+  // ============================
+  // Funcionalidad para buscar equipos por ID Cliente (ID Dueño)
+  // ============================
   const buscarEquiposBtn = document.getElementById("buscar_id_cliente");
   const idClienteInput = document.getElementById("idCliente");
   const resultContainer = document.querySelector(".result-container");
 
-  // Se crea el contenedor de paginación y se coloca justo después del result-container
+  // Se crea el contenedor de paginación y se coloca justo después del resultContainer
   const paginationContainer = document.createElement("div");
   paginationContainer.id = "pagination";
   resultContainer.parentNode.insertBefore(paginationContainer, resultContainer.nextSibling);
 
   // Variables para la paginación
   let filteredEquipments = [];
-  const itemsPerPage = 12; // Puedes ajustar este valor
+  const itemsPerPage = 12;
   let currentPage = 1;
 
-  // Función para generar el HTML de un equipo (sin botones de actualizar o borrar)
-  const renderEquipment = (equipment, showActions = false) => {
+  const renderEquipment = (equipment) => {
     return `
       <div class="equipment">
         <p><strong>ID:</strong> ${equipment.id_equip || ''}</p>
@@ -83,14 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   };
 
-  // Función para renderizar la página actual de equipos en columna
   function renderPage() {
     resultContainer.innerHTML = "";
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pageEquipments = filteredEquipments.slice(startIndex, endIndex);
 
-    // Contenedor en bloque para mostrar los equipos en columna
     const container = document.createElement("div");
     container.style.display = "flex";
     container.style.flexDirection = "column";
@@ -103,7 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.appendChild(container);
   }
 
-  // Función para renderizar los controles de paginación
   function renderPaginationControls() {
     paginationContainer.innerHTML = "";
     const totalPages = Math.ceil(filteredEquipments.length / itemsPerPage);
@@ -159,14 +208,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Función para iniciar la visualización paginada
   function showPaginatedEquipments() {
     currentPage = 1;
     renderPage();
     renderPaginationControls();
   }
 
-  // Evento click para el botón "Buscar Equipos" basado en el ID Cliente
   buscarEquiposBtn.addEventListener("click", (e) => {
     e.preventDefault();
     const idCliente = idClienteInput.value.trim();
@@ -175,7 +222,6 @@ document.addEventListener("DOMContentLoaded", () => {
       paginationContainer.innerHTML = "";
       return;
     }
-    // Se obtiene todos los equipos y se filtran por id_customer
     fetch("https://sysgesbe-production.up.railway.app/api/equipment/findAll")
       .then(response => {
         if (!response.ok) {
@@ -198,14 +244,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // --- Funcionalidad para guardar la orden ---
-  const form = document.querySelector("form");
+  // ============================
+  // Funcionalidad para guardar la orden
+  // ============================
+  const formOrden = document.querySelector("form");
   const mensajeDiv = document.getElementById("mensaje");
 
-  form.addEventListener("submit", (event) => {
+  formOrden.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    // Obtener los valores de los inputs
+    // Obtención de valores de inputs
     const create_date = document.getElementById("fechaRecepcion").value;
     const deadline = document.getElementById("fechaEntrega").value;
     const tot_pay = parseFloat(document.getElementById("totalPago").value);
@@ -214,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const id_equip = parseInt(document.getElementById("idEquipo").value);
     const idEmployee = parseInt(document.getElementById("idEmpleado").value);
 
-    // Crear el objeto con la estructura JSON requerida
+    // Construcción del objeto con la estructura JSON requerida
     const ordenData = {
       create_date: create_date,
       deadline: deadline,
@@ -225,7 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
       employee: { idEmployee: idEmployee }
     };
 
-    // Enviar datos mediante POST a la URL indicada
     fetch("https://sysgesbe-production.up.railway.app/api/ord_rep/save", {
       method: "POST",
       headers: {
@@ -249,7 +296,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // --- Modo oscuro ---
+  // ============================
+  // Funcionalidad para el Modo Oscuro
+  // ============================
   const btnDarkMode = document.getElementById("btn-dark-mode");
 
   if (localStorage.getItem("dark-mode") === "enabled") {
