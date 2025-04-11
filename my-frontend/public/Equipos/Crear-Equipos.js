@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Referencias para buscar cliente
+    // Referencias para buscar cliente: usar el nuevo id "cedula_customer"
     const buscarBtn = document.getElementById("buscar_cliente");
-    const idInput = document.getElementById("id_customer");
+    const cedulaInput = document.getElementById("cedula_customer");
     const clienteBuscado = document.querySelector(".cliente_buscado");
-    
+
     // Referencia al formulario de equipo
     const equipoForm = document.getElementById("equipo-form");
-    
+
     // Función para mostrar el resultado del cliente en el contenedor
     const mostrarCliente = (cliente) => {
       if (!cliente || Object.keys(cliente).length === 0) {
@@ -23,22 +23,22 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
     };
-  
+
     // Función para mostrar errores en el contenedor de cliente
     const mostrarError = (mensaje) => {
       clienteBuscado.innerHTML = `<p style="color: red;">Error: ${mensaje}</p>`;
     };
-  
-    // Evento click para el botón Buscar cliente
+
+    // Evento click para el botón Buscar cliente usando "cedula_customer"
     buscarBtn.addEventListener("click", (e) => {
       e.preventDefault(); // Prevenir comportamiento por defecto
-      const id = idInput.value.trim();
-      if (id === "") {
-        mostrarError("Ingrese un ID válido.");
+      const cedula = cedulaInput.value.trim();
+      if (cedula === "") {
+        mostrarError("Ingrese una cédula válida.");
         return;
       }
       // URL de la API para buscar cliente; asegúrate de que este endpoint exista
-      const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${id}`;
+      const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
       fetch(url)
         .then(response => {
           if (!response.ok) {
@@ -53,11 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
           mostrarError(error.message);
         });
     });
-  
-    // Evento submit para guardar el equipo
+
+    // Evento submit para guardar el equipo. Se toma el id del cliente desde el input con id "id_customer"
     equipoForm.addEventListener("submit", (e) => {
       e.preventDefault();
-  
+
       // Se recopilan los datos de los inputs
       const model_equip = document.getElementById("model_equip").value.trim();
       const brand_equip = document.getElementById("brand_equip").value.trim();
@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const on_off_equip = document.getElementById("on_off_equip").value === "true"; // Convertir a boolean
       const cau_dam_equip = document.getElementById("cau_dam_equip").value.trim();
       const condEquip = document.getElementById("condEquip").value;
-      const id_customer = parseInt(document.getElementById("id_customer").value);
-  
+      const id_customer = parseInt(document.getElementById("id_customer").value);  // Este es el input de ID Cliente
+
       // Construir el payload JSON
       const payload = {
         model_equip,
@@ -91,10 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
         condEquip,
         id_customer
       };
-  
+
       // URL de la API para guardar equipo
       const url = "https://sysgesbe-production.up.railway.app/api/equipment/save";
-  
+
       fetch(url, {
         method: "POST",
         headers: {
@@ -117,9 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("mensaje").innerHTML = `<p style="color: red;">Error al guardar el equipo: ${error.message}</p>`;
         });
     });
+
+    // Modo oscuro
     const btnDarkMode = document.getElementById("btn-dark-mode");
 
-    // Aplicar el modo oscuro si estaba activado
     if (localStorage.getItem("dark-mode") === "enabled") {
         document.body.classList.add("dark-mode");
         if (btnDarkMode) btnDarkMode.textContent = "☀️";
@@ -128,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnDarkMode) {
         btnDarkMode.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
-
             if (document.body.classList.contains("dark-mode")) {
                 localStorage.setItem("dark-mode", "enabled");
                 btnDarkMode.textContent = "☀️";
@@ -138,5 +138,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-  });
-  
+});
