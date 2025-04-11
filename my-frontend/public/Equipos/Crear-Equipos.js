@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       // URL de la API para buscar cliente; asegúrate de que este endpoint exista
-      const url = `https://sysgesbe-production.up.railway.app/api/customer/find/${id}`;
+      const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${id}`;
       fetch(url)
         .then(response => {
           if (!response.ok) {
