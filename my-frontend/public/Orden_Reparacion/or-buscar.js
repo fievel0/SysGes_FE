@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Color:</strong> <input type="text" id="editColorEquip" value="${order.equipment?.color_equip || ''}" readonly></p>
         <p><strong>Estado:</strong> <input type="text" id="editStateEquip" value="${order.equipment?.state_equip || ''}" readonly></p>
         <p><strong>Contraseña:</strong> <input type="text" id="contraseña" value="${order.equipment?.pass_equip || ''}" readonly></p>
-        <p><strong>Antivirus:</strong> <input type="text" id="editAntiEquip" value="${order.equipment?.anti_equip || ''}" readonly></p>
+        <p><strong>Antiguedad:</strong> <input type="text" id="editAntiEquip" value="${order.equipment?.anti_equip || ''}" readonly></p>
         <p><strong>Accesorios:</strong> <input type="text" id="editAccessorEquip" value="${order.equipment?.accessor_equip || ''}" readonly></p>
         <p><strong>Detalles Físicos:</strong> <input type="text" id="editOtherEquip" value="${order.equipment?.detail_phy_equip || ''}" readonly></p>
         <p><strong>Temperatura:</strong> <input type="text" id="editTempEquip" value="${order.equipment?.temp_equip || ''}" readonly></p>
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const fechaOrden = new Date().toLocaleDateString();
+    
 
     // Extraer información de la orden
     const customer = currentOrder.customer || {};
@@ -267,6 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const daño_causado = equipment.cau_dam_equip || "__________________";
     const condicion = equipment.condEquip || "__________________";
 
+
+    const fechaOrden = orderData.create_date || "__________________";
     const idOrden = orderData.id_order || "__________________";
     const fechaRecepcion = orderData.create_date || "__________________";
     const fechaEntrega = orderData.deadline || "__________________";
@@ -421,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="datos-col">
         <strong>Datos Empleado</strong><br>
         <strong>ID:</strong> ${idEmpleado} | <strong>Nombre:</strong> ${nombreEmpleado} <br>
-        <strong>Teléfono:</strong> ${telEmpployee}<br>
+        
       </div>
     </div>
   
