@@ -220,6 +220,48 @@ document.addEventListener("DOMContentLoaded", () => {
         showError(error.message);
       });
   });
+  // Función que genera el documento Word
+function generarWord() {
+  // Aquí defines el contenido que deseas incluir en el documento.
+  // Puedes obtener datos dinámicos, por ejemplo, del contenedor de resultados.
+  const contenido = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Orden de Trabajo</title>
+      </head>
+      <body>
+        <h1>Resultado de la Búsqueda</h1>
+        <p>Aquí va el contenido que quieres exportar en el documento Word.</p>
+      </body>
+    </html>
+  `;
+
+  // Creación del Blob con el contenido y el tipo MIME adecuado para Word.
+  const blob = new Blob([contenido], { type: "application/msword" });
+
+  // Crear un URL temporal para el Blob.
+  const url = URL.createObjectURL(blob);
+
+  // Creación de un elemento de enlace para disparar la descarga.
+  const a = document.createElement("a");
+  a.href = url;
+  // Definir el nombre del archivo a descargar.
+  a.download = "OrdenDeTrabajo.doc";
+
+  // Se añade el elemento temporalmente al DOM y se hace clic programáticamente.
+  document.body.appendChild(a);
+  a.click();
+
+  // Se limpia el DOM eliminando el enlace y se revoca el objeto URL.
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Se asigna la función al evento click del botón con id "btnDescargar"
+document.getElementById("btnDescargar").addEventListener("click", generarWord);
+
   const btnDarkMode = document.getElementById("btn-dark-mode");
 
     // Aplicar el modo oscuro si estaba activado
