@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("CampoBuscar1");
   const btnBorrar = document.getElementById("btnBorrar");
   const btnActualizar = document.getElementById("btnActualizar");
+  const btnDescargar = document.getElementById("btnDescargar");
 
   // Referencias a elementos del modal de confirmación
   const modalConfirm = document.getElementById("modalConfirm");
@@ -13,7 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmNo = document.getElementById("confirmNo");
 
   let pendingDeleteId = null;
-  let searchedId = null; // Variable para guardar el número ingresado en la búsqueda
+  let searchedId = null; // Guardar el número ingresado en la búsqueda
+  let currentOrder = null; // Guardará la información de la orden luego de la búsqueda
 
   // Función para quitar la clase "active" (en este caso solo btnID)
   const clearSelected = () => {
@@ -25,15 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
     inputField.value = "";
     resultContainer.innerHTML = "";
     searchedId = null;
+    currentOrder = null;
   };
 
-  // Función para mostrar el resultado formateado en inputs para edición
+  // Función para mostrar el resultado formateado en inputs para edición y guardar el resultado globalmente
   const showResult = (order) => {
+    currentOrder = order; // Guardamos la orden en una variable global para usarla en la función de descarga
     if (!order || Object.keys(order).length === 0) {
       resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
       return;
     }
-    // Se mostrará únicamente la información necesaria, marcando como readonly los campos que no se pueden modificar
     resultContainer.innerHTML = `
       <div class="order">
         <h3>Datos de la Orden</h3>
@@ -220,66 +223,64 @@ document.addEventListener("DOMContentLoaded", () => {
         showError(error.message);
       });
   });
+
+  // Función para generar el documento Word con la información de la orden actual
   function generarWord() {
-    // Usar variables globales para rellenar el contenido
+    if (!currentOrder) {
+      alert("Primero realice una búsqueda para generar el documento");
+      return;
+    }
+
     const fechaOrden = new Date().toLocaleDateString();
-    const idCliente = selectedCustomer ? selectedCustomer.id_customer : "__________________";
-    const nombreCliente = selectedCustomer ? selectedCustomer.name : "__________________";
-    const telefono = selectedCustomer ? selectedCustomer.phone : "__________________";
-    const identificacion = selectedCustomer ? selectedCustomer.cardIdentifi : "__________________";
-    const mail = selectedCustomer ? selectedCustomer.mail : "__________________";
-    
-    //Variables para Empleado
-    const idEmpleado = selectedEmployee ? selectedEmployee.idEmployee : "__________________";
-    const nombreEmpleado = selectedEmployee ? selectedEmployee.nameEmployee : "__________________";
-    const positionEmployee = selectedEmployee ? selectedEmployee.positionEmployee : "__________________";
-    const cedEmployee  = selectedEmployee ? selectedEmployee. cedEmployee: "__________________";
-    const telEmpployee  = selectedEmployee ? selectedEmployee.telEmpployee : "__________________";
-    const dirEmpployee  = selectedEmployee ? selectedEmployee.dirEmployee : "__________________";
 
+    // Extraer información de la orden
+    const customer = currentOrder.customer || {};
+    const employee = currentOrder.employee || {};
+    const equipment = currentOrder.equipment || {};
+    const orderData = currentOrder;
+    const payment = (currentOrder.payments && currentOrder.payments.length > 0) ? currentOrder.payments[0] : {};
 
-    // Variables para el equipo
-    //Variables fuera de la tabla
-    const IDEquipo = selectedEquipment ? selectedEquipment.id_equip : "__________________";
-    const modeloEquipo = selectedEquipment ? selectedEquipment.model_equip : "__________________";
-    const MarcaEquipo = selectedEquipment ? selectedEquipment.brand_equip : "__________________";
-    const detalleEquipo = selectedEquipment ? selectedEquipment.detail_phy_equip : "__________________";
-    const estadoEquipo = selectedEquipment ? selectedEquipment.state_equip : "__________________";
-    //Variables dentro de la tabla sobre el equipo
-    const encendido = selectedEquipment ? (selectedEquipment.on_off_equip ? "Encendido" : "Apagado") : "__________________";
-    const color = selectedEquipment ? selectedEquipment.color_equip : "__________________";
-    const contraseña = selectedEquipment ? selectedEquipment.pass_equip : "__________________";
-    const antiguedad = selectedEquipment ? selectedEquipment.anti_equip : "__________________";
-    const accesorios = selectedEquipment ? selectedEquipment.accessor_equip : "__________________";
-    const Reporte = selectedEquipment ? selectedEquipment.reported_equip : "__________________";
-    const temperatura = selectedEquipment ? selectedEquipment.temp_equip : "__________________";
-    const daño_causado = selectedEquipment ? selectedEquipment.cau_dam_equip : "__________________";
-    const condicion = selectedEquipment ? selectedEquipment.condEquip : "__________________";
+    // Asignar valores con fallback a "__________________" en caso de ausencia de información
+    const idCliente = customer.id_customer || "__________________";
+    const nombreCliente = customer.name || "__________________";
+    const telefono = customer.phone || "__________________";
+    const identificacion = customer.cardIdentifi || "__________________";
+    const mail = customer.mail || "__________________";
 
-    //Variables para la orden de pago 
-    const idOrden = selectedOrden ? selectedOrden.orderId : "Valor por defecto";
-    const fechaRecepcion = selectedOrden ? selectedOrden.create_date : "Valor por defecto";
-    const fechaEntrega = selectedOrden ? selectedOrden.deadline : "Valor por defecto";
-    const totalPagoo = selectedOrden ? selectedOrden.tot_pay : "Valor por defecto";
-    const DetallesAdicionales = selectedOrden ? selectedOrden.addit_details : "Valor por defecto";
+    const idEmpleado = employee.idEmployee || "__________________";
+    const nombreEmpleado = employee.nameEmployee || "__________________";
+    // Si el teléfono del empleado no está definido en employee, se puede asignar otro campo o dejar el valor por defecto
+    const telEmpployee = employee.phone || "__________________";
 
-    //Variables para el pago
-    const idPago = selectedPayment ? selectedPayment.id_pay : "Valor por defecto";
-    const fechaDelPago = selectedPayment ? selectedPayment.date_pay : "Valor por defecto";
-    const saldoDelPago = selectedPayment ? selectedPayment.money_pay : "Valor por defecto";
-    const abonoDelPago = selectedPayment ? selectedPayment.money_b_pay : "Valor por defecto";
-    const TotaldePagooo = Number(selectedPayment.order_tot_pay) - Number(selectedPayment.money_b_pay);
+    const IDEquipo = equipment.id_equip || "__________________";
+    const modeloEquipo = equipment.model_equip || "__________________";
+    const MarcaEquipo = equipment.brand_equip || "__________________";
+    const detalleEquipo = equipment.detail_phy_equip || "__________________";
+    const estadoEquipo = equipment.state_equip || "__________________";
+    const encendido = (typeof equipment.on_off_equip === "boolean") ? (equipment.on_off_equip ? "Encendido" : "Apagado") : "__________________";
+    const color = equipment.color_equip || "__________________";
+    const contraseña = equipment.pass_equip || "__________________";
+    const antiguedad = equipment.anti_equip || "__________________";
+    const accesorios = equipment.accessor_equip || "__________________";
+    const Reporte = equipment.reported_equip || "__________________";
+    const temperatura = equipment.temp_equip || "__________________";
+    const daño_causado = equipment.cau_dam_equip || "__________________";
+    const condicion = equipment.condEquip || "__________________";
 
+    const idOrden = orderData.id_order || "__________________";
+    const fechaRecepcion = orderData.create_date || "__________________";
+    const fechaEntrega = orderData.deadline || "__________________";
+    const totalPagoo = orderData.tot_pay || "__________________";
+    const DetallesAdicionales = orderData.addit_details || "__________________";
 
+    const idPago = payment.id_pay || "__________________";
+    const fechaDelPago = payment.date_pay || "__________________";
+    const saldoDelPago = payment.money_pay || "__________________";
+    const abonoDelPago = payment.money_b_pay || "__________________";
+    const TotaldePagooo = Number(totalPagoo) - Number(payment.money_b_pay || 0);
 
- 
-
-
-    
-    
-    // Contenido HTML del Word con estilos y la información combinada
-  // Contenido HTML del Word con estilos y la información combinada
-  const contenido = `
+    // Contenido HTML para el archivo Word
+    const contenido = `
   <html xmlns:o="urn:schemas-microsoft-com:office:office"
       xmlns:w="urn:schemas-microsoft-com:office:word" 
       xmlns="http://www.w3.org/TR/REC-html40">
@@ -298,7 +299,6 @@ document.addEventListener("DOMContentLoaded", () => {
         border-top: 1px solid #000;
         margin: 5px 0;
       }
-      /* Reducimos ligeramente el margen superior para datos en la misma fila */
       .datos-row {
         display: flex;
         justify-content: space-between;
@@ -310,8 +310,8 @@ document.addEventListener("DOMContentLoaded", () => {
       table {
         border-collapse: collapse;
         margin-top: 5px;
-        font-size: 10px; /* Tamaño de letra aumentado */
-        width: 100%;     /* Ocupa el 100% del ancho */
+        font-size: 10px;
+        width: 100%;
       }
       th, td {
         border: 1px solid black;
@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
         background-color: #f2f2f2;
       }
       .separador {
-        margin-top: 5px; /* Se reduce el espacio superior para unir secciones */
+        margin-top: 5px;
       }
       .info-final {
         margin-top: 10px;
@@ -361,25 +361,20 @@ document.addEventListener("DOMContentLoaded", () => {
         text-align: center;
         margin-bottom: 5px;
       }
-      /* Se agrega una clase para “ID Equipo” y se reduce el margen superior */
       .info-equipo-inicial {
         margin-top: -5px;
       }
-      /* Para la cabecera de la tabla “Información del Equipo” */
       .titulo-info-equipo {
         margin-bottom: 2px;
         font-weight: bold;
       }
-      /* Para subir el bloque de Observaciones junto al título */
       .observaciones {
         margin-top: 0;
       }
-      /* Estilo para el logo */
       .Logo {
-        height: 50px; /* Ajusta la altura según lo pequeño que necesites */
+        height: 50px;
         width: auto;
       }
-      /* Contenedor del logo y encabezado */
       .header-container {
         display: flex;
         align-items: center;
@@ -408,30 +403,28 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     
     <p>
-      <strong>ID Equipo:</strong> ${id_equip}  <br>
+      <strong>ID Equipo:</strong> ${IDEquipo}  <br>
       <strong>Modelo:</strong> ${modeloEquipo}  <br>
       <strong>Marca:</strong> ${MarcaEquipo}  <br>
       <strong>Detalle:</strong> ${detalleEquipo}  <br>
       <strong>Estado:</strong> ${estadoEquipo}  
     </p>
   
-    <!-- Datos del Cliente y Empleado en la misma fila -->
     <div class="datos-row">
       <div class="datos-col">
         <strong>Datos Cliente</strong> <br>
-        <strong>Cliente:</strong> <strong>ID:</strong> ${idCliente} | <strong>Nombre:</strong> ${nombreCliente} <br>
+        <strong>ID:</strong> ${idCliente} | <strong>Nombre:</strong> ${nombreCliente} <br>
         <strong>Identificación:</strong> ${identificacion}<br>
         <strong>Teléfono:</strong> ${telefono}<br>
         <strong>Correo:</strong> ${mail}<br>
       </div>
       <div class="datos-col">
         <strong>Datos Empleado</strong><br>
-        <strong>Empleado:</strong> <strong>ID:</strong> ${idEmpleado} | <strong>Nombre:</strong> ${nombreEmpleado} <br>
+        <strong>ID:</strong> ${idEmpleado} | <strong>Nombre:</strong> ${nombreEmpleado} <br>
         <strong>Teléfono:</strong> ${telEmpployee}<br>
       </div>
     </div>
   
-    <!-- Sección de Información del Equipo con título más cerca de la tabla -->
     <div class="titulo-info-equipo">
       <p class="titulo-info-equipo">Información del Equipo</p>
       <table>
@@ -474,7 +467,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </table>
     </div>
     <br> 
-  
     <strong>Orden de Pago</strong> <br>
     <strong>Fecha de Recepción: </strong>${fechaRecepcion}  <br>
     <strong>Fecha de Entrega: </strong>${fechaEntrega}  <br>
@@ -504,14 +496,12 @@ document.addEventListener("DOMContentLoaded", () => {
       </p>
     </div>
   
-    <!-- Sección de Observaciones con ajuste para el texto "No se da garantía" -->
     <div class="separador observaciones">
-      
       <p>
       <strong>OBSERVACIONES:</strong> <br>
         No se da garantía de ningún tipo cuando se reciben los equipos apagados.<br>
         Todo equipo se toma con riesgo, puesto que por una pieza reparada se puede dañar otra por la manipulación o por el daño obtenido del uso.<br>
-        No hay garantía de displays. Es responsabilidad del cliente comprobar la mercadería, puesto que una vez salida del establecimiento, el cliente puede ocasionar algún daño.<br>
+        No hay garantía de displays. Es responsabilidad del cliente comprobar la mercadería, ya que una vez salida del establecimiento puede ocasionar algún daño.<br>
         El establecimiento no se responsabiliza por equipos reportados o robados. En caso de que vengan las autoridades y sean confiscados, NO HAY GARANTÍA DE NINGÚN TIPO EN EQUIPOS MOJADOS, TORCIDOS O FISURADOS. Cualquier dispositivo con estas características será recibido bajo el riesgo del cliente.<br>
         Al firmar este documento, el cliente acepta todas las condiciones y observaciones que se estipulan en el mismo.<br>
         Se cobrará 5 dólares por la revisión, sirva o no el dispositivo.
@@ -522,44 +512,39 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </body>
 </html>
+    `;
 
-  `;
-  
-
-
-    // Generación del archivo Word
+    // Generar el archivo Word
     const blob = new Blob([contenido], { type: "application/msword" });
-    const url = URL.createObjectURL(blob);
+    const urlBlob = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url;
+    a.href = urlBlob;
     a.download = "OrdenDeTrabajo.doc";
     a.click();
-    URL.revokeObjectURL(url);
-
-
+    URL.revokeObjectURL(urlBlob);
   }
-  
-  // Asignar el evento al botón (asegúrate de que el elemento con id "generarDocBtn" exista)
-  document.getElementById("btnDescargar").addEventListener("click", generarWord);
+
+  // Asignar el evento al botón de descarga
+  if (btnDescargar) {
+    btnDescargar.addEventListener("click", generarWord);
+  }
+
+  // Modo oscuro
   const btnDarkMode = document.getElementById("btn-dark-mode");
-
-    // Aplicar el modo oscuro si estaba activado
-    if (localStorage.getItem("dark-mode") === "enabled") {
-        document.body.classList.add("dark-mode");
-        if (btnDarkMode) btnDarkMode.textContent = "☀️";
-    }
-
-    if (btnDarkMode) {
-        btnDarkMode.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-
-            if (document.body.classList.contains("dark-mode")) {
-                localStorage.setItem("dark-mode", "enabled");
-                btnDarkMode.textContent = "☀️";
-            } else {
-                localStorage.setItem("dark-mode", "disabled");
-                btnDarkMode.textContent = "🌑";
-            }
-        });
-    }
+  if (localStorage.getItem("dark-mode") === "enabled") {
+    document.body.classList.add("dark-mode");
+    if (btnDarkMode) btnDarkMode.textContent = "☀️";
+  }
+  if (btnDarkMode) {
+    btnDarkMode.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("dark-mode", "enabled");
+        btnDarkMode.textContent = "☀️";
+      } else {
+        localStorage.setItem("dark-mode", "disabled");
+        btnDarkMode.textContent = "🌑";
+      }
+    });
+  }
 });
