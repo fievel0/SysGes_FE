@@ -75,8 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const url = btnID.classList.contains("active")
-            ? `https://sysgesbe-production.up.railway.app/api/customer/find/${valor}`
-            : `https://sysgesbe-production.up.railway.app/api/customer/cedula/${valor}`;
+            ? `https://backend.int-solutionstec.com/api/customer/find/${valor}`
+            : `https://backend.int-solutionstec.com/api/customer/cedula/${valor}`;
         
         fetch(url)
             .then(response => {
@@ -117,8 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Verifica cuál es la búsqueda activa y arma el endpoint correspondiente
         const url = btnID.classList.contains("active")
-            ? `https://sysgesbe-production.up.railway.app/api/customer/delete/${pendingDeleteId}`
-            : `https://sysgesbe-production.up.railway.app/api/customer/deletee/${pendingDeleteId}`;
+            ? `https://backend.int-solutionstec.com/api/customer/delete/${pendingDeleteId}`
+            : `https://backend.int-solutionstec.com/api/customer/deletee/${pendingDeleteId}`;
         
         fetch(url, { method: "DELETE" })
             .then(response => {
@@ -162,10 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let identifier, url;
         if (btnID.classList.contains("active")) {
             identifier = idField.value.trim();
-            url = `https://sysgesbe-production.up.railway.app/api/customer/update/${identifier}`;
+            url = `https://backend.int-solutionstec.com/api/customer/update/${identifier}`;
         } else if (btnCedula.classList.contains("active")) {
             identifier = cardField.value.trim();
-            url = `https://sysgesbe-production.up.railway.app/api/customer/updatee/${identifier}`;
+            url = `https://backend.int-solutionstec.com/api/customer/updatee/${identifier}`;
         } else {
             showError("Por favor, selecciona una opción de búsqueda (ID o Cédula) para actualizar");
             return;
