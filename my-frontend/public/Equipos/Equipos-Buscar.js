@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
           clienteBuscado.innerHTML = `<p style="color:red;">Ingrese un ID válido.</p>`;
           return;
         }
-        const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
+        const url = `https://backend.int-solutionstec.com/api/customer/cedula/${cedula}`;
         fetch(url)
           .then(response => {
             if (!response.ok) {
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnDelete.addEventListener("click", () => {
           const equipmentId = equipDiv.querySelector(".equip-id")?.value;
           if (!equipmentId) return;
-          const deleteUrl = `https://sysgesbe-production.up.railway.app/api/equipment/delete/${equipmentId}`;
+          const deleteUrl = `https://backend.int-solutionstec.com/api/equipment/delete/${equipmentId}`;
           fetch(deleteUrl, { method: "DELETE" })
             .then(response => {
               if (!response.ok) {
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showGlobalMessage("No se encontró el equipo para actualizar", "red");
             return;
           }
-          const updateUrl = `https://sysgesbe-production.up.railway.app/api/equipment/update/${equipmentData.id_equip}`;
+          const updateUrl = `https://backend.int-solutionstec.com/api/equipment/update/${equipmentData.id_equip}`;
           fetch(updateUrl, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -357,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Búsqueda por ID Equipo
     if (btnID.classList.contains("active")) {
-      const url = `https://sysgesbe-production.up.railway.app/api/equipment/find/${valor}`;
+      const url = `https://backend.int-solutionstec.com/api/equipment/find/${valor}`;
       fetch(url)
         .then(response => {
           if (!response.ok) {
@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Búsqueda por ID Dueño
     else if (btnCedula.classList.contains("active")) {
-      fetch("https://sysgesbe-production.up.railway.app/api/equipment/findAll")
+      fetch("https://backend.int-solutionstec.com/api/equipment/findAll")
         .then(response => {
           if (!response.ok) {
             throw new Error("Error en la solicitud");
@@ -407,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
       resultContainer.innerHTML = `<p style="color:red;">No se encontró el ID del equipo para borrar</p>`;
       return;
     }
-    const deleteUrl = `https://sysgesbe-production.up.railway.app/api/equipment/delete/${equipmentId}`;
+    const deleteUrl = `https://backend.int-solutionstec.com/api/equipment/delete/${equipmentId}`;
     fetch(deleteUrl, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -434,7 +434,7 @@ document.addEventListener("DOMContentLoaded", () => {
       resultContainer.innerHTML = `<p style="color:red;">No se encontró el equipo para actualizar</p>`;
       return;
     }
-    const updateUrl = `https://sysgesbe-production.up.railway.app/api/equipment/update/${equipmentData.id_equip}`;
+    const updateUrl = `https://backend.int-solutionstec.com/api/equipment/update/${equipmentData.id_equip}`;
     fetch(updateUrl, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
