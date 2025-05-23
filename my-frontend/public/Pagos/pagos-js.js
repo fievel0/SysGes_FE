@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Primero, obtenemos tanto pagos como órdenes
   Promise.all([
-    fetch('https://sysgesbe-production.up.railway.app/api/payments/findAll').then(res => res.json()),
-    fetch('https://sysgesbe-production.up.railway.app/api/ord_rep/findAll').then(res => res.json())
+    fetch('https://backend.int-solutionstec.com/api/payments/findAll').then(res => res.json()),
+    fetch('https://backend.int-solutionstec.com/api/ord_rep/findAll').then(res => res.json())
   ])
   .then(([paymentsData, ordersData]) => {
     payments = paymentsData;
