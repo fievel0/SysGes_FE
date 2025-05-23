@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const datos = { email, password };
 
-        fetch("https://sysgesbe-production.up.railway.app/api/login", {
+        fetch("https://sistemaint.up.railway.app/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datos)
