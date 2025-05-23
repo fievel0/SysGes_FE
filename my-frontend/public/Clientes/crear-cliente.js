@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Consultar si la identificación ya está registrada
-      const checkResponse = await fetch(`https://sysgesbe-production.up.railway.app/api/customer/find/${cardIdentifi}`);
+      const checkResponse = await fetch(`https://backend.int-solutionstec.com/api/customer/find/${cardIdentifi}`);
 
       if (checkResponse.ok) {
         // Si la respuesta es 200 OK, significa que la identificación ya existe
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
-      const response = await fetch('https://sysgesbe-production.up.railway.app/api/customer/save', {
+      const response = await fetch('https://backend.int-solutionstec.com/api/customer/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
