@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDarkMode = document.getElementById("btn-dark-mode");
   
     // Realiza la solicitud GET a la API para obtener la última orden
-    fetch('https://sysgesbe-production.up.railway.app/api/ord_rep/findLast')
+    fetch('https://backend.int-solutionstec.com/api/ord_rep/findLast')
       .then(response => {
         if (!response.ok) {
           throw new Error('Error en la solicitud: ' + response.status);
