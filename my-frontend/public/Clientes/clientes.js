@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let customers = [];
   
     // Realiza la solicitud GET usando Fetch de forma automática
-    fetch('https://sysgesbe-production.up.railway.app/api/customer/findAll')
+    fetch('https://backend.int-solutionstec.com/api/customer/findAll')
       .then(response => {
         if (!response.ok) {
           throw new Error('Error en la solicitud: ' + response.status);
