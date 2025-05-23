@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let equipments = [];
 
   // Realiza la solicitud GET usando Fetch de forma automática
-  fetch('https://sysgesbe-production.up.railway.app/api/equipment/findAll')
+  fetch('https://backend.int-solutionstec.com/api/equipment/findAll')
     .then(response => {
       if (!response.ok) {
         throw new Error('Error en la solicitud: ' + response.status);
