@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       // URL de la API para buscar cliente; asegúrate de que este endpoint exista
-      const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
+      const url = `https://backend.int-solutionstec.com/api/customer/cedula/${cedula}`;
       fetch(url)
         .then(response => {
           if (!response.ok) {
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       // URL de la API para guardar equipo
-      const url = "https://sysgesbe-production.up.railway.app/api/equipment/save";
+      const url = "https://backend.int-solutionstec.com/api/equipment/save";
 
       fetch(url, {
         method: "POST",
