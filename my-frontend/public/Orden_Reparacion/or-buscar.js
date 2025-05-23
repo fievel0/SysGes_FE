@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Se asigna el número buscado a la variable global searchedId
     searchedId = valor;
-    const url = `https://sysgesbe-production.up.railway.app/api/ord_rep/find/${valor}`;
+    const url = `https://backend.int-solutionstec.com/api/ord_rep/find/${valor}`;
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Evento para confirmar el borrado
   confirmYes.addEventListener("click", () => {
     if (!pendingDeleteId) return;
-    const url = `https://sysgesbe-production.up.railway.app/api/ord_rep/delete/${pendingDeleteId}`;
+    const url = `https://backend.int-solutionstec.com/api/ord_rep/delete/${pendingDeleteId}`;
     fetch(url, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const payload = { deadline, tot_pay, addit_details, customer, equipment, employee };
 
     // Construir la URL de actualización utilizando el número buscado
-    const url = `https://sysgesbe-production.up.railway.app/api/ord_rep/update/${searchedId}`;
+    const url = `https://backend.int-solutionstec.com/api/ord_rep/update/${searchedId}`;
 
     fetch(url, {
       method: "PUT",
@@ -394,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="header-text">
         <h3 style="margin: 2px;">Orden de Trabajo</h3>
         <h4 style="margin: 2px;">INT-SOLUTIONS</h4>
-        <h6 style="margin: 2px;">PIO XII Y AMALIA URÍGÜEN, DIAGONAL A LA ESCUELA DE MONJAS ELENA ENRÍQUEZ</h6>
+        <h6 style="margin: 2px;">Calderón - Calle Duchicela S/N y 9 de Agosto, sobre "Los Pollos El Granjero", 2do piso.</h6>
       </div>
     </div>
     <hr>
