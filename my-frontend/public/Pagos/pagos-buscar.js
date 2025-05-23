@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showError("Por favor ingresa un valor para la búsqueda");
             return;
         }
-        const url = `https://sysgesbe-production.up.railway.app/api/payments/find/${valor}`;
+        const url = `https://backend.int-solutionstec.com/api/payments/find/${valor}`;
         
         fetch(url)
             .then(response => {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmYes.addEventListener("click", () => {
         if (!pendingDeleteId) return;
         
-        const url = `https://sysgesbe-production.up.railway.app/api/payments/delete/${pendingDeleteId}`;
+        const url = `https://backend.int-solutionstec.com/api/payments/delete/${pendingDeleteId}`;
         
         fetch(url, { method: "DELETE" })
             .then(response => {
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         // La URL de actualización incluye el valor ingresado (ej. 13)
-        const url = `https://sysgesbe-production.up.railway.app/api/payments/update/${valor}`;
+        const url = `https://backend.int-solutionstec.com/api/payments/update/${valor}`;
 
         fetch(url, {
             method: "PUT",
