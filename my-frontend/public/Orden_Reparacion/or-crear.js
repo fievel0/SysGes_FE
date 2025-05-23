@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     // URL de la API para buscar el cliente mediante cédula
-    const url = `https://sysgesbe-production.up.railway.app/api/customer/cedula/${cedula}`;
+    const url = `https://backend.int-solutionstec.com/api/customer/cedula/${cedula}`;
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     // URL de la API para buscar el empleado mediante cédula
-    const url = `https://sysgesbe-production.up.railway.app/api/employee/cedula/${cedula}`;
+    const url = `https://backend.int-solutionstec.com/api/employee/cedula/${cedula}`;
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
       paginationContainer.innerHTML = "";
       return;
     }
-    fetch("https://sysgesbe-production.up.railway.app/api/equipment/findAll")
+    fetch("https://backend.int-solutionstec.com/api/equipment/findAll")
       .then(response => {
         if (!response.ok) {
           throw new Error("Error en la solicitud de equipos");
@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
       employee: { idEmployee: idEmployee }
     };
 
-    fetch("https://sysgesbe-production.up.railway.app/api/ord_rep/save", {
+    fetch("https://backend.int-solutionstec.com/api/ord_rep/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
