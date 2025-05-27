@@ -1,292 +1,178 @@
-/* =======================
-   MODO CLARO (por defecto)
-========================== */
+/* estilos.css */
 
-/* Estilos para el contenedor principal del login */
-.Primero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
-    justify-content: flex-start;
-    padding-top: 60px; /* Espacio en la parte superior */
+/* 1. Variables de color para modo claro y oscuro */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --primary-color: #0066cc;
+  --input-bg: #f5f5f5;
+  --input-border: #cccccc;
+  --shadow-color: rgba(0,0,0,0.1);
+  --transition-speed: 0.3s;
 }
 
-/* Estilos del título principal */
-.Titulo {
-    text-align: center;
-    font-size: 2em;
-    margin-top: 5rem;
+body.dark-mode {
+  --bg-color: #181818;
+  --text-color: #e0e0e0;
+  --primary-color: #3399ff;
+  --input-bg: #2c2c2c;
+  --input-border: #555555;
+  --shadow-color: rgba(0,0,0,0.5);
 }
 
-/* Estilos del logo */
-.Logo {
-    width: 100px;
-    height: auto;
-    margin-top: -20px;
+/* 2. Estilos globales */
+* {
+  box-sizing: border-box;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-/* Subtítulo de inicio de sesión */
-.titulo_sesion {
-    font-size: 1.5em;
-    margin-top: 30px;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Estilos del formulario */
-.Formulario {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
-    width: 300px;
+/* 3. Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 2rem;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
-/* Estilos del botón para activar el modo oscuro */
+.boton-enlace,
 .BotonModoOscuro {
-    background-color: transparent; /* Hace el fondo transparente */
-    border: none; /* Quita el borde */
-    font-size: 30px; /* Aumenta el tamaño del icono */
-    padding: 15px 30px;
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    margin-top: -8rem;
-    margin-left: 20rem;
+  border: none;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+
+}
+.BotonModoOscuro{
+      background-color: transparent; /* Hace el fondo transparente */
+      border: none; /* Quita el borde */
+    font-size: 25px;
+}
+.boton-enlace:hover,
+.BotonModoOscuro:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+
+}
+.boton-enlace:hover{
+
+      background-color: #004e9b;
+
 }
 
-/* Estilos de las etiquetas del formulario */
+
+/* 4. Main logo */
+.main {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.imagen-enlace {
+  width: 120px;
+  height: auto;
+  transition: transform var(--transition-speed);
+}
+
+.imagen-enlace:hover {
+  transform: scale(1.05);
+}
+
+/* 5. Títulos */
+.Titulo {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.titulo_sesion {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 0.1rem;
+  color: var(--primary-color);
+}
+
+/* 6. Formulario */
+.Formulario {
+  max-width: 360px;
+  margin: 0.5rem auto;
+  background-color: var(--input-bg);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
 .Formulario label {
-    font-size: 1.1em;
-    margin-bottom: 5px;
-    text-align: left;
-    width: 100%;
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
 }
 
-/* Estilos de los campos de entrada del formulario */
 .Formulario input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    background-color: #fff;
-    color: #000;
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
-/* Estilos del botón de iniciar sesión */
-.Formulario .btn-iniciar {
-    width: 100%;
-    padding: 10px;
-    background-color: rgb(161, 147, 72);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2em;
-    cursor: pointer;
+.Formulario input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(51, 153, 255, 0.2);
+  outline: none;
 }
 
-/* Cambia el color del botón cuando el usuario pasa el mouse */
-.Formulario .btn-iniciar:hover {
-    background-color: rgb(93, 83, 35);
+.btn-iniciar {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
 }
 
-.Volver {
-    position: absolute;
-    width: 14%;
-    padding: 10px;
-    background-color: rgb(161, 147, 72);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-left: -18rem;
-    text-decoration: none;
-    margin-top: -2.6rem; 
-
-}
-
-/* Cambia el color del botón cuando el usuario pasa el mouse */
-.Volver:hover {
-    background-color: rgb(93, 83, 35);
-}
-
-
-/* =======================
-   MEDIA QUERIES
-========================== */
-
-/* Media query para pantallas medianas (820px a 1200px) */
-@media screen and (min-width: 820px) and (max-width: 1200px) {
-    .Formulario {
-        width: 350px;  
-    }
-
-    .Titulo {
-        font-size: 2.5em;  
-    }
-
-    .Logo {
-        width: 120px;  
-    }
-    .Volver {
-        position: absolute;
-        width: 6%;
-        padding: 10px;
-        background-color: rgb(161, 147, 72);
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 1.2em;
-        cursor: pointer;
-        margin-left: -43rem;
-        margin-top: -1.5rem;
-        text-decoration: none;    
-    }
-    
-    /* Cambia el color del botón cuando el usuario pasa el mouse */
-    .Volver:hover {
-        background-color: rgb(93, 83, 35);
-    }
-
-    .BotonModoOscuro{
-        margin-left: 40rem;
-        margin-top: -7.3rem;
-    }
-}
-
-/* Media query para pantallas grandes (más de 1200px) */
-@media screen and (min-width: 1200px) {
-    .Formulario {
-        width: 800px;  
-        padding: 1px;  
-        margin-top: -30px;
-    }
-
-    .Titulo {
-        font-size: 3em; 
-        margin-top: 8rem;
-        
-        
-    }
-
-    .Logo {
-        width: 180px;  
-        height: auto;
-        padding: 30px;  
-        margin-top: -50px;
-    }
-    
-    .titulo_sesion {
-        font-size: 2.5em;  
-        padding: 50px;  
-        margin-top: -40px;
-    }
-    
-    .Formulario .btn-iniciar {
-        font-size: 2em;  
-        padding: 15px;  
-    }
-
-    .Formulario input {
-        font-size: 1.5em;  
-        padding: 12px;  
-    }
-
-    .Formulario label {
-        font-size: 1.5em;  
-    }
-
-    /* Ajustes del botón de modo oscuro en pantallas grandes */
-    .BotonModoOscuro {
-        font-size: 40px;
-        margin-top: -13rem;
-        margin-left: 93rem;
-    }
-    .Volver {
-        position: absolute;
-        width: 3.5%;
-        padding: 10px;
-        background-color: rgb(161, 147, 72);
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 1.2em;
-        cursor: pointer;
-        margin-left: -90rem;
-        text-decoration: none; 
-        margin-top: -1rem;/* Esto elimina el subrayado */
-    
-    }
-    
-    /* Cambia el color del botón cuando el usuario pasa el mouse */
-    .Volver:hover {
-        background-color: rgb(93, 83, 35);
-    }
+.btn-iniciar:hover {
+    transition: transform 0.2s ease;
+    background-color: #004e9b;
     
 }
 
-/* Media query para pantallas muy grandes (4K) */
-@media screen and (min-width: 2560px) and (min-height: 1537px) {
-    .Formulario {
-        width: 100rem;  
-    }
-
-    .Titulo {
-        font-size: 6em; 
-        
- 
-    }
-
-    .Logo {
-        width: 300px;  
-        padding: 40px;  
-        margin-top: 10px;
-    }
-
-    .titulo_sesion {
-        font-size: 4em;  
-        padding: 60px;  
-    }
-
-    .Formulario .btn-iniciar {
-        font-size: 2.5em;  
-        padding: 20px;  
-    }
-
-    .Formulario input {
-        font-size: 2em;  
-        padding: 15px;  
-    }
-
-    .Formulario label {
-        font-size: 2em;  
-    }
+/* 7. Mensaje de notificación */
+#mensaje {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #d9534f; /* rojo suave */
 }
 
-/* =======================
-   MODO OSCURO
-========================== */
-
-/* Aplica fondo oscuro y cambia el color del texto en modo oscuro */
-.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-/* Ajusta los inputs en modo oscuro */
-.dark-mode .Formulario input {
-    background-color: #1e1e1e;
-    border: 1px solid #444;
-    color: #e0e0e0;
-}
-
-/* Cambia el color del botón de inicio en modo oscuro */
-.dark-mode .Formulario .btn-iniciar {
-    background-color: rgb(161, 147, 72);
-    color: white; /* Asegura que el texto sea visible */
-}
-
-/* Cambia el color del botón cuando el usuario pasa el mouse en modo oscuro */
-.dark-mode .Formulario .btn-iniciar:hover {
-    background-color: rgb(93, 83, 35);
+/* 8. Footer (si deseas algo) */
+.footer {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-color);
 }
