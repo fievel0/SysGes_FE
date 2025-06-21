@@ -63,7 +63,29 @@
       </div>
     </div>
   </div>
-  
+      <!-- Botón flotante de Ayuda -->
+    <button class="btn-ayuda" onclick="mostrarAyuda()">❓ Ayuda</button>
+
+        <!-- Modal de Ayuda -->
+    <div id="modalAyuda" class="modal-ayuda">
+      <div class="modal-ayuda-contenido">
+        <span class="cerrar" onclick="cerrarAyuda()">&times;</span>
+        <h2>📂 Ayuda del Módulo Clientes</h2>
+        <ol>
+          <li><strong>🔍 Buscar Cliente:</strong> Selecciona si deseas buscar por <strong>ID</strong> o <strong>Cédula</strong>. Luego, escribe el valor en el campo y haz clic en <strong>Buscar</strong>.</li>
+          <li><strong>✏️ Actualizar Información:</strong> Una vez mostrado el cliente, puedes editar los campos (Nombre, Identificación, Teléfono, Correo) y pulsar <strong>Actualizar</strong> para guardar los cambios.</li>
+          <li><strong>🗑️ Eliminar Cliente:</strong> Busca primero al cliente, luego presiona <strong>Borrar</strong> y confirma en el mensaje emergente. Se recomienda precaución, ya que esta acción es irreversible.</li>
+        </ol>
+
+        <p class="advertencia" style="margin-top: 1rem;">
+          🎨 <strong>Indicadores Visuales:</strong><br>
+          <span style="color: #e53935; font-weight: bold;">Rojo:</span> campo no editable (solo lectura, como el ID).<br>
+          <span style="color: #43a047; font-weight: bold;">Verde:</span> campos editables (pueden modificarse como Nombre, Teléfono, etc.).
+        </p>
+      </div>
+    </div>
+
+
   <script src="Buscar.js"></script>
 </body>
 </html>
