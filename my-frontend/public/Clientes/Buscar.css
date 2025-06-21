@@ -1,285 +1,351 @@
-/* Estilos generales */
+/* Variables globales */
+:root {
+  --color-fondo: #fefefe;
+  --color-texto: #222;
+  --color-primario: #0078d4;
+  --color-secundario: #a39348;
+  --color-boton-accion: #a19348;
+  --color-boton-accion-hover: #5d5323;
+  --color-boton-activo: #008000;
+  --color-boton-disabled: #808080;
+  --radio-bordes: 8px;
+  --sombra: rgba(0,0,0,0.12);
+  --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Reset y base */
+* {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+  font-family: var(--fuente-principal);
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: white;
-    margin: 0;
-    padding: 0;
-}
-.BotonModoOscuro{
-    background-color: transparent; /* Hace el fondo transparente */
-    border: none; /* Quita el borde */
-    font-size: 40px; /* Aumenta el tamaño del texto */
-    padding: 15px 30px; /* Ajusta el tamaño del botón */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    margin-top: -0.5rem;
-    margin-left: -3rem;
-    }
-
-/* Estilos para el Título */
-.Titulo {
-    text-align: center;
-    font-size: 1.8em;
-    font-weight: bold;
-    padding-top: 10px;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  min-height: 100vh;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Estilos para el Logo */
-.Logo {
-    width: 80px;
-    height: auto;
-    padding-left: 20px;
-}
-
-/* Estilos para la sección superior */
+/* Cabeza: logo, título y botón modo oscuro */
 .cabeza {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    padding-top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-top: 25px;
+  width: 100%;
+  max-width: 960px;
 }
 
-/* Contenedor del subtítulo y botones */
+.Logo {
+  width: 80px;
+  height: auto;
+  padding-left: 20px;
+}
+
+.Titulo {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  position: relative;
+  padding-bottom: 0.3rem;
+  border-bottom: 4px solid var(--color-primario);
+}
+
+.BotonModoOscuro {
+  background: transparent;
+  border: none;
+  font-size: 40px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  color: var(--color-texto);
+  transition: color 0.3s ease;
+}
+
+.BotonModoOscuro:hover {
+  color: var(--color-primario);
+}
+
+/* Header contenedor: subtítulo y botones */
 .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-radius: 5px;
-    margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  margin: 1rem 0 0.5rem;
+  width: 100%;
+  max-width: 960px;
+  border-radius: var(--radio-bordes);
 }
 
 .Subtitulo {
-    font-size: 1.5em;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-secundario);
 }
 
-/* Estilo para el botón Salir */
+/* Botón salir */
 .Salir {
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
+  padding: 0.6rem 1.2rem;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 5px var(--sombra);
+  transition: background-color 0.3s ease;
 }
 
 .Salir:hover {
-    background-color: #d32f2f;
+  background-color: #d32f2f;
 }
 
-/* Estilos para el formulario */
-.form-container {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    margin-top: -30px; 
+/* Cuerpo contenedor */
+.cuerpo {
+  width: 100%;
+  max-width: 960px;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-left: 0;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+/* Botones principales (ID, Cédula) */
+.BotonesPrincipales {
+  display: flex;
+  gap: 1rem;
 }
 
-label {
-    font-weight: bold;
-    margin-top: 10px;
-    color: #333;
-}
-
-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    outline: none;
-    transition: border 0.3s ease-in-out;
-}
-
-input:focus {
-    border-color: #666;
-}
-
-/* Botones de acción: Borrar y Actualizar */
-.Borrar, .Actualizar {
-    margin-top: 20px;
-    padding: 10px 15px;
-    background-color: rgb(161, 147, 72);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-    font-size: 1em;
-}
-
-.Borrar:hover, .Actualizar:hover {
-    background-color: rgb(93, 83, 35);
-}
-
-/* Botones para seleccionar búsqueda (ID y Cédula) */
 .ID, .Cedula {
-    padding: 10px 15px;
-    background-color: #808080; /* Gris por defecto */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-    font-size: 1em;
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-boton-disabled);
+  color: white;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  flex: 1;
+  text-align: center;
 }
 
 .ID:hover, .Cedula:hover {
-    background-color: #6e6e6e;
+  background-color: #6e6e6e;
 }
 
-/* Estado activo: botón seleccionado */
 .ID.active, .Cedula.active {
-    background-color: #008000; /* Verde al estar activo */
+  background-color: var(--color-boton-activo);
 }
 
-/* Estilos para el formulario de búsqueda */
+/* Campo buscar */
 .CampoBuscar {
-    display: flex;
-    align-items: center;
-    max-width: 400px;
-    margin: 5px auto;
+  display: flex;
+  max-width: 400px;
+  width: 100%;
 }
 
 .CampoBuscar input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    outline: none;
+  flex-grow: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: var(--radio-bordes) 0 0 var(--radio-bordes);
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.CampoBuscar input:focus {
+  border-color: var(--color-primario);
 }
 
 .CampoBuscar button {
-    padding: 8px 15px;
-    font-size: 1.2em;
-    background-color: rgb(161, 147, 72);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: var(--color-boton-accion);
+  color: white;
+  border: none;
+  border-radius: 0 var(--radio-bordes) var(--radio-bordes) 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .CampoBuscar button:hover {
-    background-color: rgb(93, 83, 35);
+  background-color: var(--color-boton-accion-hover);
 }
 
-.BotonesPrincipales, .CampoBuscar, .result-container, .action-buttons {
-    margin-left: 20px;
+/* Result container */
+.result-container {
+  width: 100%;
+  max-width: 960px;
+  min-height: 100px;
+  background-color: white;
+  border-radius: var(--radio-bordes);
+  box-shadow: 0 2px 6px var(--sombra);
+  padding: 1rem;
+  color: var(--color-texto);
 }
-.Borrar{
-    margin-left: 50px;
-}
+
+/* Action buttons */
 .action-buttons {
-    display: flex;
-    gap: 60px;
+  display: flex;
+  gap: 2rem;
+  margin-left: 20px;
 }
-@media screen and (min-width: 1559px) {
-    .BotonModoOscuro{
-        background-color: transparent; /* Hace el fondo transparente */
-        border: none; /* Quita el borde */
-        font-size: 40px; /* Aumenta el tamaño del texto */
-        padding: 15px 30px; /* Ajusta el tamaño del botón */
-        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-        margin-top: -0.5rem;
-        margin-left: 66rem;
-        }
-    
-    .Subtitulo{
-    margin-left: 45rem;
-    font-size: 35px;
-    }
-    
-    .botones-container button {
-        padding: 15px 30px; /* Más grande en pantallas grandes */
-        font-size: 1.3em;
-  }
-  .cuerpo{
-    display: flex;
-    flex-direction: column; /* Ajusta la altura en base a los hijos */
-    padding: 10px;
-    width: max-content;
-    margin-left: 45rem;
-  }
-  .cuerpo, .Subtitulo{
-    margin-left: 40rem;
-  }
+
+.Borrar, .Actualizar {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-boton-accion);
+  color: white;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px var(--sombra);
+  transition: background-color 0.3s ease;
 }
-/* Estilos para el modal */
+
+.Borrar:hover, .Actualizar:hover {
+  background-color: var(--color-boton-accion-hover);
+}
+
+/* Modal */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--color-fondo);
+  padding: 1.5rem;
+  border-radius: var(--radio-bordes);
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 10px var(--sombra);
+}
+
+.modal-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#confirmYes {
+  background-color: var(--color-boton-activo);
+  color: white;
+}
+
+#confirmYes:hover {
+  background-color: #006400;
+}
+
+#confirmNo {
+  background-color: #d32f2f;
+  color: white;
+}
+
+#confirmNo:hover {
+  background-color: #a52a2a;
+}
+
+/* Ocultar modal */
+.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .cabeza {
+    flex-direction: column;
+    gap: 0.5rem;
   }
-  
-  .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    width: 300px;
+  .Titulo {
+    font-size: 1.5rem;
   }
-  
-  .modal-buttons {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-around;
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .modal-buttons button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  .Subtitulo {
+    margin-bottom: 0.8rem;
   }
-  
-  #confirmYes {
-    background-color: #008000;
-    color: #fff;
+  .BotonesPrincipales {
+    flex-direction: column;
   }
-  
-  #confirmNo {
-    background-color: #d32f2f;
-    color: #fff;
+  .CampoBuscar {
+    max-width: 100%;
   }
-  
-  /* Clase para ocultar el modal */
-  .hidden {
-    display: none;
+  .action-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    margin-left: 0;
   }
-/* =======================
-   MODO OSCURO
-========================== */
-.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
-  
-  /* Ajusta el fondo, borde y color de los inputs en modo oscuro */
-  .dark-mode .Formulario input {
-    background-color: #1e1e1e;
-    border: 1px solid #444;
-    color: #e0e0e0;
-  }
-  
-  /* Cambiar el fondo del botón en modo oscuro */
-  .dark-mode .Formulario .btn-iniciar {
-    background-color: #333;
-  }
-  
+}
+
+/* Modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .result-container {
+  background-color: #1f1f1f;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  color: #ddd;
+}
+
+body.dark-mode .CampoBuscar input {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
+
+body.dark-mode .CampoBuscar button,
+body.dark-mode .Borrar,
+body.dark-mode .Actualizar {
+  background-color: #5d5323;
+  color: #ddd;
+}
+
+body.dark-mode .CampoBuscar button:hover,
+body.dark-mode .Borrar:hover,
+body.dark-mode .Actualizar:hover {
+  background-color: #a39348;
+}
+
+body.dark-mode .modal-content {
+  background-color: #121212;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.9);
+}
+
+body.dark-mode #confirmNo {
+  background-color: #a52a2a;
+}
+
+body.dark-mode #confirmYes {
+  background-color: #006400;
+}
