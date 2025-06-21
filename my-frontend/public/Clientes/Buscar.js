@@ -29,20 +29,37 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Función para mostrar el resultado formateado en inputs para edición
     const showResult = (customer) => {
-        if (!customer || Object.keys(customer).length === 0) {
-            resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
-            return;
-        }
-        resultContainer.innerHTML = `
-            <div class="customer"> 
-                <p><strong>ID:</strong> <input type="text" id="editId" value="${customer.id_customer || ''}" readonly></p>
-                <p><strong>Nombre:</strong> <input type="text" id="editName" value="${customer.name || ''}"></p>
-                <p><strong>Identificación:</strong> <input type="text" id="editCard" value="${customer.cardIdentifi || ''}"></p>
-                <p><strong>Teléfono:</strong> <input type="text" id="editPhone" value="${customer.phone || ''}"></p>
-                <p><strong>Correo:</strong> <input type="text" id="editMail" value="${customer.mail || ''}"></p>
+    if (!customer || Object.keys(customer).length === 0) {
+        resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
+        return;
+    }
+
+    resultContainer.innerHTML = `
+        <div class="card-result">
+            <div class="input-group">
+                <label for="editId">ID:</label>
+                <input type="text" id="editId" value="${customer.id_customer || ''}" readonly>
             </div>
-        `;
+            <div class="input-group">
+                <label for="editName">Nombre:</label>
+                <input type="text" id="editName" value="${customer.name || ''}">
+            </div>
+            <div class="input-group">
+                <label for="editCard">Identificación:</label>
+                <input type="text" id="editCard" value="${customer.cardIdentifi || ''}">
+            </div>
+            <div class="input-group">
+                <label for="editPhone">Teléfono:</label>
+                <input type="text" id="editPhone" value="${customer.phone || ''}">
+            </div>
+            <div class="input-group">
+                <label for="editMail">Correo:</label>
+                <input type="text" id="editMail" value="${customer.mail || ''}">
+            </div>
+        </div>
+    `;
     };
+
   
     // Función para mostrar errores
     const showError = (error) => {
