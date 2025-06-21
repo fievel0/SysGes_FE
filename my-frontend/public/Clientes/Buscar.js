@@ -29,36 +29,37 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Función para mostrar el resultado formateado en inputs para edición
     const showResult = (customer) => {
-    if (!customer || Object.keys(customer).length === 0) {
-        resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
-        return;
-    }
+        if (!customer || Object.keys(customer).length === 0) {
+            resultContainer.innerHTML = `<p style="color: red;">No se encontró información.</p>`;
+            return;
+        }
 
-    resultContainer.innerHTML = `
-        <div class="card-result">
-            <div class="input-group">
-                <label for="editId">ID:</label>
-                <input type="text" id="editId" value="${customer.id_customer || ''}" readonly>
+        resultContainer.innerHTML = `
+            <div class="card-result">
+                <div class="input-group">
+                    <label for="editId">ID:</label>
+                    <input type="text" id="editId" value="${customer.id_customer || ''}" readonly style="border: 2px solid #e53935;">
+                </div>
+                <div class="input-group">
+                    <label for="editName">Nombre:</label>
+                    <input type="text" id="editName" value="${customer.name || ''}" style="border: 2px solid #43a047;">
+                </div>
+                <div class="input-group">
+                    <label for="editCard">Identificación:</label>
+                    <input type="text" id="editCard" value="${customer.cardIdentifi || ''}" style="border: 2px solid #43a047;">
+                </div>
+                <div class="input-group">
+                    <label for="editPhone">Teléfono:</label>
+                    <input type="text" id="editPhone" value="${customer.phone || ''}" style="border: 2px solid #43a047;">
+                </div>
+                <div class="input-group">
+                    <label for="editMail">Correo:</label>
+                    <input type="text" id="editMail" value="${customer.mail || ''}" style="border: 2px solid #43a047;">
+                </div>
             </div>
-            <div class="input-group">
-                <label for="editName">Nombre:</label>
-                <input type="text" id="editName" value="${customer.name || ''}">
-            </div>
-            <div class="input-group">
-                <label for="editCard">Identificación:</label>
-                <input type="text" id="editCard" value="${customer.cardIdentifi || ''}">
-            </div>
-            <div class="input-group">
-                <label for="editPhone">Teléfono:</label>
-                <input type="text" id="editPhone" value="${customer.phone || ''}">
-            </div>
-            <div class="input-group">
-                <label for="editMail">Correo:</label>
-                <input type="text" id="editMail" value="${customer.mail || ''}">
-            </div>
-        </div>
-    `;
+        `;
     };
+
 
   
     // Función para mostrar errores
@@ -322,4 +323,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+});
+// ==========================
+// AYUDA DEL SISTEMA
+// ==========================
+function mostrarAyuda() {
+  const modal = document.getElementById("modalAyuda");
+  modal.style.display = "flex";
+}
+
+function cerrarAyuda() {
+  const modal = document.getElementById("modalAyuda");
+  modal.style.display = "none";
+}
+
+// Cierra si el usuario hace clic fuera del contenido
+window.addEventListener("click", function(event) {
+  const modal = document.getElementById("modalAyuda");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
 });
