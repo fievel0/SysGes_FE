@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>INT-SOLUTIONS | Control de Clientes</title>
+  <link rel="stylesheet" href="./clientes.css" />
+  <link rel="icon" type="image/png" href="./pnglogo.png" />
+</head>
+<body>
+  <header class="header-principal">
+    <img class="logo" src="./pnglogo.png" alt="Logo INT-SOLUTIONS" />
+    <h1 class="titulo">INT-SOLUTIONS</h1>
+    <button class="boton-modo-oscuro" id="btn-dark-mode" aria-label="Cambiar modo oscuro">🌑</button>
+  </header>
+
+  <section class="subheader">
+    <h2 class="subtitulo">Clientes</h2>
+    <nav class="nav-botones">
+      <a href="./crear-cliente.html"><button class="btn-crear">Crear Cliente</button></a>
+      <a href="./Buscar.html"><button class="btn-buscar">Buscar Cliente</button></a>
+      <a href="../menu/menu.html"><button class="btn-salir">Volver al Menú</button></a>
+    </nav>
+  </section>
+
+  <section class="opcion-paginacion">
+    <label for="mostrarOpciones">Ver clientes:</label>
+    <select id="mostrarOpciones" aria-label="Opciones para mostrar clientes">
+      <option value="pagina">Por páginas</option>
+      <option value="todos">Ver todos</option>
+    </select>
+  </section>
+
+  <main class="container">
+    <div id="contenedorDatos" class="datos-container" role="list"></div>
+  </main>
+
+  <nav class="paginacion" id="pagination" aria-label="Navegación de páginas"></nav>
+
+  <script src="clientes.js"></script>
+</body>
+</html>

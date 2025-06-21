@@ -1,0 +1,509 @@
+/* Variables globales */
+:root {
+  --color-fondo: #fefefe;
+  --color-texto: #222;
+  --color-primario: #0078d4;
+  --color-secundario: #a39348;
+  --color-boton-accion: #a19348;
+  --color-boton-accion-hover: #5d5323;
+  --color-boton-activo: #008000;
+  --color-boton-disabled: #808080;
+  --radio-bordes: 8px;
+  --sombra: rgba(0,0,0,0.12);
+  --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Reset y base */
+* {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+  font-family: var(--fuente-principal);
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  min-height: 100vh;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Cabeza: logo, título y botón modo oscuro */
+.cabeza {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-top: 25px;
+  width: 100%;
+  max-width: 960px;
+}
+
+.Logo {
+  width: 80px;
+  height: auto;
+  padding-left: 20px;
+}
+
+.Titulo {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  position: relative;
+  padding-bottom: 0.3rem;
+  border-bottom: 4px solid var(--color-primario);
+}
+
+.BotonModoOscuro {
+  background: transparent;
+  border: none;
+  font-size: 40px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  color: var(--color-texto);
+  transition: color 0.3s ease;
+}
+
+.BotonModoOscuro:hover {
+  color: var(--color-primario);
+}
+
+/* Header contenedor: subtítulo y botones */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  margin: 1rem 0 0.5rem;
+  width: 100%;
+  max-width: 960px;
+  border-radius: var(--radio-bordes);
+}
+
+.Subtitulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+}
+
+/* Botón salir */
+.Salir {
+  padding: 0.6rem 1.2rem;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 5px var(--sombra);
+  transition: background-color 0.3s ease;
+}
+
+.Salir:hover {
+  background-color: #d32f2f;
+}
+
+/* Cuerpo contenedor */
+.cuerpo {
+  width: 100%;
+  max-width: 960px;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-left: 0;
+}
+
+/* Botones principales (ID, Cédula) */
+.BotonesPrincipales {
+  display: flex;
+  gap: 1rem;
+}
+
+.ID, .Cedula {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-boton-disabled);
+  color: white;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.ID:hover, .Cedula:hover {
+  background-color: #6e6e6e;
+}
+
+.ID.active, .Cedula.active {
+  background-color: var(--color-boton-activo);
+}
+
+/* Campo buscar */
+.CampoBuscar {
+  display: flex;
+  max-width: 400px;
+  width: 100%;
+}
+
+.CampoBuscar input {
+  flex-grow: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: var(--radio-bordes) 0 0 var(--radio-bordes);
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.CampoBuscar input:focus {
+  border-color: var(--color-primario);
+}
+
+.CampoBuscar button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: var(--color-boton-accion);
+  color: white;
+  border: none;
+  border-radius: 0 var(--radio-bordes) var(--radio-bordes) 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.CampoBuscar button:hover {
+  background-color: var(--color-boton-accion-hover);
+}
+
+/* Result container */
+.result-container {
+  width: 100%;
+  max-width: 960px;
+  min-height: 100px;
+  background-color: white;
+  border-radius: var(--radio-bordes);
+  box-shadow: 0 2px 6px var(--sombra);
+  padding: 1rem;
+  color: var(--color-texto);
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 2rem;
+  margin-left: 20px;
+}
+
+.Borrar, .Actualizar {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-boton-accion);
+  color: white;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px var(--sombra);
+  transition: background-color 0.3s ease;
+}
+
+.Borrar:hover, .Actualizar:hover {
+  background-color: var(--color-boton-accion-hover);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--color-fondo);
+  padding: 1.5rem;
+  border-radius: var(--radio-bordes);
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 10px var(--sombra);
+}
+
+.modal-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#confirmYes {
+  background-color: var(--color-boton-activo);
+  color: white;
+}
+
+#confirmYes:hover {
+  background-color: #006400;
+}
+
+#confirmNo {
+  background-color: #d32f2f;
+  color: white;
+}
+
+#confirmNo:hover {
+  background-color: #a52a2a;
+}
+
+/* Ocultar modal */
+.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .cabeza {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .Titulo {
+    font-size: 1.5rem;
+  }
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .Subtitulo {
+    margin-bottom: 0.8rem;
+  }
+  .BotonesPrincipales {
+    flex-direction: column;
+  }
+  .CampoBuscar {
+    max-width: 100%;
+  }
+  .action-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    margin-left: 0;
+  }
+}
+
+/* Modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .result-container {
+  background-color: #1f1f1f;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  color: #ddd;
+}
+
+body.dark-mode .CampoBuscar input {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
+
+body.dark-mode .CampoBuscar button,
+body.dark-mode .Borrar,
+body.dark-mode .Actualizar {
+  background-color: #5d5323;
+  color: #ddd;
+}
+
+body.dark-mode .CampoBuscar button:hover,
+body.dark-mode .Borrar:hover,
+body.dark-mode .Actualizar:hover {
+  background-color: #a39348;
+}
+
+body.dark-mode .modal-content {
+  background-color: #121212;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.9);
+}
+
+body.dark-mode #confirmNo {
+  background-color: #a52a2a;
+}
+
+body.dark-mode #confirmYes {
+  background-color: #006400;
+}
+.card-result {
+    max-width: 500px;
+    margin: 30px auto;
+    background-color: #f9f9f9;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card-result .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.card-result label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.card-result input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border 0.3s;
+}
+
+.card-result input:focus {
+    border-color: #3366cc;
+    outline: none;
+}
+
+/* Dark mode para la tarjeta */
+.dark-mode .card-result {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.dark-mode .card-result input {
+    background-color: #2c2c2c;
+    border: 1px solid #555;
+    color: #e0e0e0;
+}
+/* Botón flotante de ayuda */
+.btn-ayuda {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0056b3;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-ayuda:hover {
+  background-color: #004494;
+  transform: translateY(-2px);
+}
+
+/* Modal de ayuda */
+.modal-ayuda {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-ayuda-contenido {
+  background-color: var(--card-bg);
+  color: var(--text);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px var(--shadow);
+  position: relative;
+}
+body.dark-mode .modal-ayuda-contenido {
+  background-color:  #2a2a2a;
+  color: var(--text-dark);
+  box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+.modal-ayuda-contenido h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.modal-ayuda-contenido ol {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+}
+
+.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+.cerrar:hover {
+  color: red;
+}
+.advertencia {
+  background-color: #fff3cd;
+  color: #856404;
+  border-left: 4px solid #ffce3d;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+}
+body.dark-mode .advertencia {
+  background-color: #4d4d26;
+  color: #fff3cd;
+  border-left-color: #d1b000;
+}
+/* Estilo para campos editables */
+.input-editable {
+  background-color: #eaffea;
+  border: 2px solid #28a745;
+}
+
+/* Estilo para campo solo lectura (no editable) */
+.input-readonly {
+  background-color: #ffecec;
+  border: 2px solid #d32f2f;
+  color: #555;
+}
+
+/* Estilo en modo oscuro */
+body.dark-mode .input-editable {
+  background-color: #294c29;
+  border-color: #28a745;
+  color: #e0e0e0;
+}
+
+body.dark-mode .input-readonly {
+  background-color: #4c1f1f;
+  border-color: #d32f2f;
+  color: #ccc;
+}

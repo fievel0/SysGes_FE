@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+
+/* Variables */
+:root {
+  --color-fondo: #fefefe;
+  --color-texto: #222;
+  --color-primario: #0078d4;
+  --color-secundario: #ff7f50;
+  --color-boton-salir: #dc3545;
+  --color-boton-salir-hover: #b02a37;
+  --color-guardar: #28a745;
+  --color-guardar-hover: #218838;
+  --radio-bordes: 8px;
+  --sombra: rgba(0,0,0,0.12);
+  --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--fuente-principal);
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  min-height: 100vh;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Header */
+.cabeza {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.Logo {
+  width: 70px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+.Logo:hover {
+  transform: scale(1.1);
+}
+
+.Titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  text-align: center;
+  flex-grow: 1;
+}
+
+.BotonModoOscuro {
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+.BotonModoOscuro:hover {
+  transform: rotate(15deg);
+}
+
+/* Subheader */
+.header-container {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.Subtitulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-secundario);
+}
+
+/* Botón volver */
+.Salir {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-boton-salir);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.25s ease;
+}
+
+.Salir:hover {
+  background-color: var(--color-boton-salir-hover);
+}
+
+/* Formulario */
+.form-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: var(--radio-bordes);
+  box-shadow: 0 2px 6px var(--sombra);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 0.8rem;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+  color: var(--color-primario);
+}
+
+input {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radio-bordes);
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: var(--color-primario);
+  outline: none;
+}
+
+/* Botón guardar */
+.Guardar {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  background-color: var(--color-guardar);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio-bordes);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.Guardar:hover {
+  background-color: var(--color-guardar-hover);
+}
+
+/* Mensaje */
+.mensajee {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+/* Modo oscuro formulario */
+body.dark-mode .form-container {
+  background-color: #1f1f1f;
+  color: #eee;
+}
+
+body.dark-mode input {
+  background-color: #2a2a2a;
+  color: #eee;
+  border-color: #555;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .Subtitulo {
+    font-size: 1.3rem;
+  }
+
+  .form-container {
+    padding: 1rem;
+  }
+
+  .Guardar {
+    font-size: 0.95rem;
+  }
+}
+.cabeza {
+  border-bottom: 2px solid var(--color-primario);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,195 @@
+/* estilos.css */
+
+/* 1. Variables de color para modo claro y oscuro */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --primary-color: #0066cc;
+  --input-bg: #f5f5f5;
+  --input-border: #cccccc;
+  --shadow-color: rgba(0,0,0,0.1);
+  --transition-speed: 0.3s;
+}
+
+body.dark-mode {
+  --bg-color: #181818;
+  --text-color: #e0e0e0;
+  --primary-color: #3399ff;
+  --input-bg: #2c2c2c;
+  --input-border: #555555;
+  --shadow-color: rgba(0,0,0,0.5);
+}
+
+/* 2. Estilos globales */
+* {
+  box-sizing: border-box;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 2rem;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.boton-enlace,
+.BotonModoOscuro {
+  border: none;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+
+}
+.BotonModoOscuro{
+      background-color: transparent; /* Hace el fondo transparente */
+      border: none; /* Quita el borde */
+    font-size: 25px;
+}
+.boton-enlace:hover,
+.BotonModoOscuro:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+
+}
+.boton-enlace:hover{
+
+      background-color: #004e9b;
+
+}
+
+
+/* 4. Main logo */
+.main {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.imagen-enlace {
+  width: 120px;
+  height: auto;
+  transition: transform var(--transition-speed);
+}
+
+.imagen-enlace:hover {
+  transform: scale(1.05);
+}
+
+/* 5. Títulos */
+.Titulo {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.titulo_sesion {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 0.1rem;
+  color: var(--primary-color);
+}
+
+/* 6. Formulario */
+.Formulario {
+  max-width: 360px;
+  margin: 0.5rem auto;
+  background-color: var(--input-bg);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.Formulario label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.Formulario input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.Formulario input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(51, 153, 255, 0.2);
+  outline: none;
+}
+
+.btn-iniciar {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-iniciar:hover {
+    transition: transform 0.2s ease;
+    background-color: #004e9b;
+    
+}
+
+/* 7. Mensaje de notificación */
+#mensaje {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #d9534f; /* rojo suave */
+}
+
+/* 8. Footer (si deseas algo) */
+.footer {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-color);
+}
+/* Efecto de sacudida (shake) */
+.shake {
+  border-color: red !important;
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-6px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(6px);
+  }
+}

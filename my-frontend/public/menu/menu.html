@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INT-SOLUTIONS Control de Equipos</title>
+  <link rel="stylesheet" href="menu.css">
+  <link rel="icon" type="image/png" href="./pnglogo.png"> 
+</head>
+<body>
+  <!-- Logo y Título -->
+  <div class="Primero">
+    <img class="Logo" src="./pnglogo.png" alt="LOGO-INT">
+    <button class="BotonModoOscuro"  id="btn-dark-mode">🌑</button>
+    <div class="Titulo">INT-SOLUTIONS</div>
+    <div class="Tituloo">OPCIONES</div>
+    
+    <!-- Botones para navegar por las diferentes páginas del sistema -->
+    <div class="Botones">
+      <a href="../Nuevo-Registro/nuevo-registro.html">
+        <button class="btn-nuevo">Nuevo Registro</button>
+      </a>
+      <a href="../Clientes/clientes.html">
+        <button class="btn-clientes">Clientes</button>
+      </a>
+      <a href="../Empleados/empleados.html">
+        <button class="btn-empleados">Empleados</button>
+      </a>
+      <a href="../Equipos/Equipos.html">
+        <button class="btn-equipos">Equipos</button>
+      </a>
+      <a href="../Orden_Reparacion/orden-reparacion.html">
+        <button class="btn-orden">Orden de Reparación</button>
+      </a>
+      <a href="../Pagos/pagos-index.html">
+      <button class="btn-pagos">Pagos</button>
+      </a>
+      <a href="../Usuarios/usuario.html">
+      <button class="btn-usuarios">Usuarios</button>
+      </a>
+      <a href="../index.html">
+        <button class="btn-salir">Salir</button>
+      </a>
+    </div>
+  </div>
+      <!-- Botón flotante de Ayuda -->
+    <button class="btn-ayuda" onclick="mostrarAyuda()">❓ Ayuda</button>
+
+    <!-- Modal de Ayuda -->
+    <div id="modalAyuda" class="modal-ayuda">
+      <div class="modal-ayuda-contenido">
+        <span class="cerrar" onclick="cerrarAyuda()">&times;</span>
+        <h2>📘 Guía del Sistema</h2>
+       <p>Este sistema está diseñado para llevar un control organizado del servicio técnico. Para registrar correctamente una reparación completa, siga estos pasos:</p>
+        <ol>
+        <li><strong>Clientes:</strong> Si el cliente aún no está registrado, debe crearlo.</li>
+        <li><strong>Empleados:</strong> Luego registre al técnico encargado, si aún no existe.</li>
+        <li><strong>Nuevo Registro:</strong> En esta opción podrá registrar al cliente, el equipo, la orden de reparación y el pago, todo en un solo flujo guiado, sin necesidad de buscar IDs ni salir del proceso.</li>
+      </ol>
+        <p class="advertencia">
+          ⚠️ <strong>Advertencia:</strong> Las secciones de <strong>Equipos</strong>, <strong>Órdenes de Reparación</strong> y <strong>Pagos</strong> están relacionadas entre sí y dependen de otros registros.<br>
+          Por eso, <strong>NO se permite crear registros desde esos módulos</strong> para evitar errores o confusiones. Use siempre el botón <strong>“Nuevo Registro”</strong> para hacerlo de forma guiada y correcta.
+        </p>
+        <p>👤 En “Usuarios” puede gestionar los administradores y accesos al sistema.</p>
+
+      </div>
+    </div>
+
+
+  <script src="menu.js"></script>
+</body>
+</html>
