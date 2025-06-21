@@ -35,11 +35,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnIniciar) {
     btnIniciar.addEventListener("click", () => {
-      const email = document.getElementById("correo").value.trim();
-      const password = document.getElementById("contraseña").value.trim();
+      const emailInput = document.getElementById("correo");
+      const passwordInput = document.getElementById("contraseña");
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
 
+      // Validación vacíos
       if (!email || !password) {
         mostrarMensaje("Por favor, ingresa correo y contraseña.", "red");
+
+        // Animación de sacudida (shake)
+        if (!email) emailInput.classList.add("shake");
+        if (!password) passwordInput.classList.add("shake");
+
+        setTimeout(() => {
+          emailInput.classList.remove("shake");
+          passwordInput.classList.remove("shake");
+        }, 1000);
+
         return;
       }
 
@@ -52,36 +65,39 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then(response => {
         if (!response.ok) {
-          // Intentamos leer un mensaje de error detallado del servidor
           return response.json()
             .then(err => {
               const msg = err.message || "Credenciales inválidas";
               throw new Error(msg);
             })
             .catch(() => {
-              // Si no viene JSON, lanzamos un mensaje genérico
               throw new Error("Credenciales inválidas");
             });
         }
         return response.json();
       })
       .then(data => {
-        // Almacenar token y userId
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.userId);
         mostrarMensaje("Inicio de sesión exitoso.", "green");
 
-        // Redirigir tras breve pausa
         setTimeout(() => {
           window.location.href = "../menu/menu.html";
         }, 500);
       })
       .catch(error => {
-        // Distinguir error de red de error de credenciales
+        const passwordInput = document.getElementById("contraseña");
+
         if (error.message === "Failed to fetch") {
           mostrarMensaje("No se pudo conectar al servidor.", "red");
         } else {
           mostrarMensaje(error.message, "red");
+
+          // Sacudir campo de contraseña si hay error
+          passwordInput.classList.add("shake");
+          setTimeout(() => {
+            passwordInput.classList.remove("shake");
+          }, 1000);
         }
       });
     });
