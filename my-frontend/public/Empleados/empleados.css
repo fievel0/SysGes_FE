@@ -1,4 +1,4 @@
-/* Variables para colores y tipografías */
+/* Variables */
 :root {
   --color-fondo: #fefefe;
   --color-texto: #222;
@@ -13,12 +13,21 @@
   --radio-bordes: 8px;
   --sombra: rgba(0,0,0,0.12);
   --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Extras para tarjetas/modal/fondos */
+  --card-bg: #ffffff;
+  --text: #222;
+  --shadow: rgba(0, 0, 0, 0.2);
+  --accent: #0078d4;
+  --card-bg-dark: #2a2a2a;
+  --text-dark: #e0e0e0;
+  --shadow-dark: rgba(0, 0, 0, 0.7);
 }
 
-/* Reset básico */
+/* Reset */
 * {
   box-sizing: border-box;
-  margin: 0; 
+  margin: 0;
   padding: 0;
   font-family: var(--fuente-principal);
 }
@@ -36,11 +45,11 @@ body {
 
 /* Modo oscuro */
 body.dark-mode {
-  background-color: #121212;
-  color: #eee;
+  --color-fondo: #121212;
+  --color-texto: #eee;
 }
 
-/* Cabeza: logo, título y botón modo oscuro */
+/* Encabezado principal */
 .cabeza {
   width: 100%;
   max-width: 960px;
@@ -83,7 +92,7 @@ body.dark-mode {
   transform: rotate(15deg);
 }
 
-/* Subtítulo y botones */
+/* Subtítulo + botones */
 .header-container {
   width: 100%;
   max-width: 960px;
@@ -118,7 +127,6 @@ body.dark-mode {
   margin-left: 0.5rem;
 }
 
-/* Botones con colores según función */
 .Crear {
   background-color: var(--color-boton-crear);
 }
@@ -143,7 +151,7 @@ body.dark-mode {
   box-shadow: 0 4px 10px rgba(176, 42, 55, 0.4);
 }
 
-/* Opciones paginación */
+/* Opción de paginación */
 .opcion-paginacion {
   width: 100%;
   max-width: 960px;
@@ -161,25 +169,24 @@ body.dark-mode {
   cursor: pointer;
 }
 
-/* Contenedor datos */
+/* Contenedores */
 .container {
   width: 100%;
   max-width: 960px;
 }
 
-/* Datos en cuadrícula */
 .datos-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
 }
 
-/* Tarjetas cliente (empleados) */
+/* Tarjetas empleados */
 .customer {
-  background-color: #fff;
+  background-color: var(--card-bg);
   border-radius: var(--radio-bordes);
   padding: 1rem 1.2rem;
-  box-shadow: 0 2px 6px var(--sombra);
+  box-shadow: 0 2px 6px var(--shadow);
   transition: box-shadow 0.3s ease;
   cursor: default;
 }
@@ -189,7 +196,7 @@ body.dark-mode {
 .customer p {
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: var(--color-texto);
+  color: var(--text);
   line-height: 1.3;
 }
 .customer p strong {
@@ -230,11 +237,11 @@ body.dark-mode {
   transform: none;
 }
 
-/* Ajustes modo oscuro */
+/* Modo oscuro adicional */
 body.dark-mode .customer {
-  background-color: #1f1f1f;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-  color: #ddd;
+  background-color: var(--card-bg-dark);
+  color: var(--text-dark);
+  box-shadow: 0 2px 6px var(--shadow-dark);
 }
 body.dark-mode .customer p strong {
   color: #80bfff;
