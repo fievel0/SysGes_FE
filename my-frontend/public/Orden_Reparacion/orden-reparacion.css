@@ -1,190 +1,236 @@
-/* Variables globales */
-:root {
-  --color-fondo: #fefefe;
-  --color-texto: #222;
-  --color-primario: #0078d4;
-  --color-secundario: #a39348;
-  --color-boton-crear: #28a745;
-  --color-boton-buscar: #17a2b8;
-  --color-boton-salir: #dc3545;
-  --color-tarjeta: #ffffff;
+/* Estilos para el contenedor de datos */
+.datos-container {
+    margin-top: 20px;
 }
 
-body.dark-mode {
-  --color-fondo: #1e1e1e;
-  --color-texto: #f5f5f5;
-  --color-tarjeta: #2e2e2e;
+/* Estilo para el botón Salir */
+.Salir {
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.Salir:hover {
+    background-color: #d32f2f;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  padding: 20px;
+/* Estilo para el botón Buscar */
+.Buscar {
+    padding: 10px 20px;
+    background-color: rgb(243, 138, 0);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-/* Encabezado */
-.cabeza {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 25px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--color-primario);
+.Buscar:hover {
+    background-color: rgb(189, 106, 39);
 }
 
-.Logo {
-  width: 60px;
-  height: 60px;
+/* Estilo para el botón Borrar */
+.Borrar {
+    padding: 10px 20px;
+    background-color: rgb(18, 21, 184);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
+.Borrar:hover {
+    background-color: rgb(3, 0, 190);
+}
+
+/* Estilos para el Título */
 .Titulo {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-primario);
-  flex-grow: 1;
-  text-align: center;
+    text-align: center;
+    font-size: 1.8em;
+    padding-top: 10px;
 }
 
-.BotonModoOscuro {
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: var(--color-texto);
+/* Estilos para el Logo */
+.Logo {
+    width: 80px;
+    height: auto;
+    padding-left: 20px;
 }
 
-/* Subtítulo y botones */
+/* =======================
+   MODO OSCURO
+========================== */
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .Formulario input {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    color: #e0e0e0;
+}
+
+.dark-mode .Formulario .btn-iniciar {
+    background-color: #333;
+}
+.dark-mode .customer {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    color: #e0e0e0;
+}
+
+/* Estilos para la sección superior */
+.cabeza {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    padding-top: 25px;
+}
+
 .header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.Subtitulo {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
 }
 
 .botones-container {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
 }
 
-.botones-container button {
-  padding: 10px 16px;
-  font-size: 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  color: #fff;
-  transition: background-color 0.3s ease;
+.BotonModoOscuro {
+    background-color: transparent;
+    border: none;
+    font-size: 40px;
+    padding: 15px 30px;
+    cursor: pointer;
+    margin-top: -0.5rem;
+    margin-left: -3rem;
 }
 
+.Subtitulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 1.5em;
+    margin-left: -18px;
+}
+
+/* Estilo para el botón Crear */
 .Crear {
-  background-color: var(--color-boton-crear);
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.Buscar {
-  background-color: var(--color-boton-buscar);
+.Crear:hover {
+    background-color: #45a049;
 }
 
+/* Estilo para el botón UltimaOrden: se ajusta igual que Crear y Salir */
 .UltimaOrden {
-  background-color: var(--color-secundario);
+    padding: 10px 20px;
+    background-color: #36c5df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.Salir {
-  background-color: var(--color-boton-salir);
+.UltimaOrden:hover {
+    background-color: #2aa3c0;
 }
 
-/* Opción de mostrar todos o por páginas */
-.opcion-paginacion {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
+/* Estilo para cada cliente */
+.customer {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-/* Contenedor de tarjetas */
+/* Opcional: ajustar el container para subirlo un poco */
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    margin-top: -10px; 
 }
 
-.datos-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Estilo individual para cada tarjeta */
-.tarjeta {
-  background-color: var(--color-tarjeta);
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
-}
-
-.tarjeta:hover {
-  transform: translateY(-4px);
-}
-
-/* Paginación */
+/* Estilos para la paginación */
 .Botones_pg {
-  margin-top: 25px;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .Botones_pg button {
-  padding: 8px 14px;
-  font-size: 13px;
-  border: none;
-  border-radius: 4px;
-  background-color: var(--color-primario);
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    margin: 0 5px;
+    padding: 8px 12px;
+    background-color: rgb(103, 93, 45);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .Botones_pg button:hover {
-  background-color: #005fa3;
+    background-color: rgb(93, 83, 35);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .cabeza {
-    flex-direction: column;
+.opcion-paginacion {
+    margin: 20px 0;
+    display: flex;
+    padding-left: 20px;
     align-items: center;
-  }
+    font-size: 1.2em;
+    margin-top: -3px;
+}
 
-  .Titulo {
-    margin: 10px 0;
-  }
+.opcion-paginacion select {
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 0.8em;
+}
 
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+/* Para pantallas grandes: tres columnas (por ejemplo, 1559px de ancho o más) */
+@media screen and (min-width: 1559px) {
+    .BotonModoOscuro {
+        background-color: transparent;
+        border: none;
+        font-size: 40px;
+        padding: 15px 30px;
+        cursor: pointer;
+        margin-top: -0.5rem;
+        margin-left: 66rem;
+    }
 
-  .botones-container {
-    justify-content: flex-start;
-  }
+    .datos-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    
+    .Subtitulo {
+        margin-left: 40rem;
+        font-size: 35px;
+    }
+    
+    /* Aplica el mismo ajuste a todos los botones dentro del contenedor */
+    .botones-container button {
+        padding: 15px 30px;
+        font-size: 1.3em;
+    }
+    
+    /* Si UltimaOrden se encuentra fuera de .botones-container, se puede especificar aquí */
+    .UltimaOrden {
+        padding: 15px 30px;
+        font-size: 1.3em;
+    }
 }
