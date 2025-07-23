@@ -1,216 +1,251 @@
-/* Estilos para el contenedor de datos */
-.datos-container {
-    margin-top: 20px;
-}
-.BotonModoOscuro{
-    background-color: transparent; /* Hace el fondo transparente */
-    border: none; /* Quita el borde */
-    font-size: 40px; /* Aumenta el tamaño del texto */
-    padding: 15px 30px; /* Ajusta el tamaño del botón */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    margin-top: -0.5rem;
-    margin-left: -3rem;
-    }
-
-/* Estilo para el botón Salir */
-.Salir {
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* Variables para colores y tipografías */
+:root {
+  --color-fondo: #fefefe;
+  --color-texto: #222;
+  --color-primario: #0078d4;
+  --color-secundario: #ff7f50;
+  --color-boton-crear: #28a745;
+  --color-boton-buscar: #f39c12;
+  --color-boton-salir: #dc3545;
+  --color-boton-hover: #005ea1;
+  --color-boton-buscar-hover: #b0720f;
+  --color-boton-salir-hover: #b02a37;
+  --radio-bordes: 8px;
+  --sombra: rgba(0,0,0,0.12);
+  --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.Salir:hover {
-    background-color: #d32f2f;
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+  font-family: var(--fuente-principal);
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  min-height: 100vh;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Modo oscuro */
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Cabeza */
+.cabeza {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-primario);
+}
+
+.Logo {
+  width: 70px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.Logo:hover {
+  transform: scale(1.1);
+}
+
+.Titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  flex-grow: 1;
+  text-align: center;
+  color: var(--color-primario);
+}
+
+.BotonModoOscuro {
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.2rem 0.6rem;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+.BotonModoOscuro:hover {
+  transform: rotate(15deg);
+}
+
+/* Subheader: título y botones */
+.header-container {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.Subtitulo {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-secundario);
+  flex-grow: 1;
+}
+
+/* Navegación botones */
+.botones-container a {
+  text-decoration: none;
+}
+.botones-container button {
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radio-bordes);
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 5px var(--sombra);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.Crear {
+  background-color: var(--color-boton-crear);
+}
+.Crear:hover {
+  background-color: #218838;
+  box-shadow: 0 4px 10px rgba(33, 136, 56, 0.4);
 }
 
 .Buscar {
-    padding: 10px 20px;
-    background-color: rgb(243, 138, 0);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: var(--color-boton-buscar);
 }
-
 .Buscar:hover {
-    background-color: rgb(189, 106, 39);
+  background-color: var(--color-boton-buscar-hover);
+  box-shadow: 0 4px 10px rgba(176, 114, 15, 0.4);
 }
 
-.Borrar {
-    padding: 10px 20px;
-    background-color: rgb(18, 21, 184);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.Salir {
+  background-color: var(--color-boton-salir);
+}
+.Salir:hover {
+  background-color: var(--color-boton-salir-hover);
+  box-shadow: 0 4px 10px rgba(176, 42, 55, 0.4);
 }
 
-.Borrar:hover {
-    background-color: rgb(3, 0, 190);
+/* Opciones paginación */
+.opcion-paginacion {
+  width: 100%;
+  max-width: 960px;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.opcion-paginacion select {
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radio-bordes);
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-/* Estilos para el Título */
-.Titulo {
-    text-align: center;
-    font-size: 1.8em;
-    padding-top: 10px;
-}
-
-/* Estilos para el Logo */
-.Logo {
-    width: 80px;
-    height: auto;
-    padding-left: 20px;
-}
-
-/* Estilos para la sección superior */
-.cabeza {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    padding-top: 25px;
-}
-
-/* Estilos para el contenedor que agrupa el subtítulo y los botones */
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-}
-
-/* Estilos para el contenedor de los botones */
-.botones-container {
-    display: flex;
-    gap: 5px; /* Espacio entre botones */
-    margin-left: 6px;
-}
-
-/* Estilos para el subtítulo */
-.Subtitulo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 1.5em;
-    margin-left: -1rem;
-}
-
-/* Estilo para el botón Crear */
-.Crear {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.Crear:hover {
-    background-color: #45a049;
-}
-
-/* Estilo para cada empleado (similar a cliente) */
-.customer {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-/* Opcional: ajustar el container para subirlo un poco */
+/* Contenedor datos */
 .container {
-    margin-top: -10px; 
+  width: 100%;
+  max-width: 960px;
 }
 
-/* Estilos para la paginación */
+.datos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* Paginación */
 .Botones_pg {
-    margin-top: 20px;
-    text-align: center;
+  width: 100%;
+  max-width: 960px;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
 .Botones_pg button {
-    margin: 0 5px;
-    padding: 8px 12px;
-    background-color: rgb(103, 93, 45);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primario);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio-bordes);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  min-width: 60px;
 }
 
-.Botones_pg button:hover {
-    background-color: rgb(93, 83, 35);
+.Botones_pg button:hover:not(:disabled) {
+  background-color: #005ea1;
+  transform: translateY(-2px);
 }
 
-/* Estilo para la opción de paginación */
-.opcion-paginacion {
-    margin: 20px 0;
-    display: flex;
-    padding-left: 20px;
-    align-items: center;
-    font-size: 1.2em;
-    margin-top: -3px; 
+.Botones_pg button:disabled {
+  background-color: #ccc;
+  cursor: default;
+  transform: none;
 }
 
-.opcion-paginacion select {
-    margin-left: 10px;
-    padding: 5px;
-    font-size: 0.8em;
+/* Dark mode ajustes */
+body.dark-mode {
+  --color-fondo: #121212;
+  --color-texto: #eee;
+}
+body.dark-mode .customer {
+  background-color: #1f1f1f;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  color: #ddd;
+}
+body.dark-mode .customer p strong {
+  color: #80bfff;
+}
+body.dark-mode .Botones_pg button {
+  background-color: #3399ff;
+}
+body.dark-mode .Botones_pg button:hover:not(:disabled) {
+  background-color: #1a73e8;
 }
 
-/* Para pantallas grandes: tres columnas (por ejemplo, 1559px de ancho o más) */
-@media screen and (min-width: 1559px) {
-    .BotonModoOscuro{
-        background-color: transparent; /* Hace el fondo transparente */
-        border: none; /* Quita el borde */
-        font-size: 40px; /* Aumenta el tamaño del texto */
-        padding: 15px 30px; /* Ajusta el tamaño del botón */
-        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-        margin-top: -0.5rem;
-        margin-left: 66rem;
-        }
-    .datos-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .Subtitulo {
-        margin-left: 45rem;
-        font-size: 35px;
-    }
-    
-    .botones-container button {
-        padding: 15px 30px; /* Más grande en pantallas grandes */
-        font-size: 1.3em;
-    }
+/* Responsive */
+@media (max-width: 600px) {
+  .cabeza {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .Titulo {
+    font-size: 1.5rem;
+  }
+  .botones-container button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+  }
+  .datos-container {
+    grid-template-columns: 1fr;
+  }
+  .opcion-paginacion {
+    font-size: 1rem;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
 }
-/* =======================
-   MODO OSCURO
-========================== */
-.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
-  
-  /* Ajusta el fondo, borde y color de los inputs en modo oscuro */
-  .dark-mode .Formulario input {
-    background-color: #1e1e1e;
-    border: 1px solid #444;
-    color: #e0e0e0;
-  }
-  
-  /* Cambiar el fondo del botón en modo oscuro */
-  .dark-mode .Formulario .btn-iniciar {
-    background-color: #333;
-  }
-  .dark-mode .customer {
-    background-color: #1e1e1e;  /* Fondo oscuro */
-    border: 1px solid #444;     /* Borde que contraste suavemente */
-    color: #e0e0e0;             /* Texto claro para buena legibilidad */
-  }
-  
