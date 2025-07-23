@@ -35,18 +35,18 @@ body {
 
 /* Modo oscuro */
 body.dark-mode {
-  background-color: #121212;
-  color: #eee;
+  --color-fondo: #121212;
+  --color-texto: #eee;
 }
 
-/* Cabeza */
+/* Encabezado principal */
 .cabeza {
   width: 100%;
   max-width: 960px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1rem 0.5rem 1rem;
+  padding: 1rem;
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--color-primario);
 }
@@ -82,7 +82,7 @@ body.dark-mode {
   transform: rotate(15deg);
 }
 
-/* Subheader: título y botones */
+/* Subtítulo y botones */
 .header-container {
   width: 100%;
   max-width: 960px;
@@ -101,10 +101,10 @@ body.dark-mode {
   flex-grow: 1;
 }
 
-/* Navegación botones */
 .botones-container a {
   text-decoration: none;
 }
+
 .botones-container button {
   padding: 0.5rem 1.2rem;
   border-radius: var(--radio-bordes);
@@ -142,7 +142,7 @@ body.dark-mode {
   box-shadow: 0 4px 10px rgba(176, 42, 55, 0.4);
 }
 
-/* Opciones paginación */
+/* Opción de paginación */
 .opcion-paginacion {
   width: 100%;
   max-width: 960px;
@@ -160,7 +160,7 @@ body.dark-mode {
   cursor: pointer;
 }
 
-/* Contenedor datos */
+/* Contenedor de datos */
 .container {
   width: 100%;
   max-width: 960px;
@@ -170,6 +170,28 @@ body.dark-mode {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
+}
+
+/* Tarjetas */
+.customer {
+  background-color: #fff;
+  border-radius: var(--radio-bordes);
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 6px var(--sombra);
+  transition: box-shadow 0.3s ease;
+  cursor: default;
+}
+.customer:hover {
+  box-shadow: 0 6px 14px rgba(0, 120, 212, 0.3);
+}
+.customer p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--color-texto);
+  line-height: 1.3;
+}
+.customer p strong {
+  color: var(--color-primario);
 }
 
 /* Paginación */
@@ -206,11 +228,7 @@ body.dark-mode {
   transform: none;
 }
 
-/* Dark mode ajustes */
-body.dark-mode {
-  --color-fondo: #121212;
-  --color-texto: #eee;
-}
+/* Modo oscuro ajustes */
 body.dark-mode .customer {
   background-color: #1f1f1f;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
